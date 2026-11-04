@@ -133,8 +133,11 @@ openapi: 3.1.0
 info:
   title: Co-Hobby API
   version: 0.1.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
-  - url: http://localhost:8080/api/v1
+  - url: /api/v1
 security:
   - BearerAuth: []
 
@@ -142,6 +145,7 @@ paths:
   /tags:
     get:
       operationId: getTags
+      summary: Retrieve available hobby categories and skill roles
       security: []
       responses:
         '200':
@@ -154,10 +158,12 @@ paths:
               example:
                 - category: Music
                   roles: [Guitarist, Drummer, Vocalist]
+        '400': { $ref: '#/components/responses/BadRequest' }
 
   /profiles:
     post:
       operationId: createProfile
+      summary: Create a new hobbyist profile
       requestBody:
         required: true
         content:
@@ -175,6 +181,7 @@ paths:
   /groups:
     get:
       operationId: listAvailableGroups
+      summary: Search open hobby groups by category and role
       security: []
       parameters:
         - in: query
@@ -198,6 +205,7 @@ paths:
         '400': { $ref: '#/components/responses/BadRequest' }
     post:
       operationId: createGroup
+      summary: Create a new hobby group
       description: Creates a group and assigns the creator as OWNER.
       requestBody:
         required: true
@@ -216,6 +224,7 @@ paths:
   /groups/{groupId}/members:
     post:
       operationId: addGroupMember
+      summary: Assign a member to an open skill role
       parameters:
         - name: groupId
           in: path
@@ -250,6 +259,7 @@ paths:
   /projects:
     post:
       operationId: createProject
+      summary: Initialize a project in PLANNING stage
       requestBody:
         required: true
         content:
@@ -269,6 +279,7 @@ paths:
   /projects/{projectId}/progress:
     patch:
       operationId: updateProjectProgress
+      summary: Advance project milestone stage
       description: Stages advance only as PLANNING to WEEK_1 to WEEK_2 to COMPLETED.
       parameters:
         - name: projectId
@@ -299,6 +310,7 @@ paths:
   /projects/{projectId}/share:
     post:
       operationId: shareProject
+      summary: Publish a completed project to the public feed
       parameters:
         - name: projectId
           in: path
@@ -322,6 +334,7 @@ paths:
   /feed/projects:
     get:
       operationId: getSharedProjectsFeed
+      summary: Fetch the public feed of shared completed projects
       security: []
       responses:
         '200':
@@ -331,6 +344,7 @@ paths:
               schema:
                 type: array
                 items: { $ref: '#/components/schemas/ProjectResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
 
 components:
   securitySchemes:
