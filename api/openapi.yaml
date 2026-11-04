@@ -1,0 +1,334 @@
+openapi: 3.1.0
+info:
+  title: Co-Hobby API
+  version: 0.1.0
+servers:
+  - url: http://localhost:8080/api/v1
+security:
+  - BearerAuth: []
+
+paths:
+  /tags:
+    get:
+      operationId: getTags
+      security: []
+      responses:
+        '200':
+          description: Available hobby categories and roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/TagCategory' }
+              example:
+                - category: Music
+                  roles: [Guitarist, Drummer, Vocalist]
+
+  /profiles:
+    post:
+      operationId: createProfile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NewProfile' }
+      responses:
+        '201':
+          description: Profile created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProfileResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { description: Missing or invalid authentication }
+
+  /groups:
+    get:
+      operationId: listAvailableGroups
+      security: []
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema: { type: string }
+          example: Music
+        - in: query
+          name: seekingRole
+          required: false
+          schema: { type: string }
+          example: Drummer
+      responses:
+        '200':
+          description: Matching open groups
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/GroupListingResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+    post:
+      operationId: createGroup
+      description: Creates a group and assigns the creator as OWNER.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NewGroupListing' }
+      responses:
+        '201':
+          description: Group created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/GroupListingResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { description: Missing or invalid authentication }
+
+  /groups/{groupId}/members:
+    post:
+      operationId: addGroupMember
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AddMemberRequest' }
+      responses:
+        '200':
+          description: Member assigned to the requested role
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/GroupListingResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { description: Missing or invalid authentication }
+        '403': { description: Only the Project Owner can add members }
+        '404': { description: Group or user not found }
+        '409':
+          description: Duplicate member or filled role vacancy
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+              example:
+                title: Role Vacancy Full
+                status: 409
+                code: ROLE_SLOT_FULL
+                detail: The Drummer vacancy has already been filled.
+
+  /projects:
+    post:
+      operationId: createProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NewProject' }
+      responses:
+        '201':
+          description: Project created in PLANNING stage
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProjectResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { description: Missing or invalid authentication }
+        '403': { description: Only the Project Owner can create a project }
+        '404': { description: Group not found }
+
+  /projects/{projectId}/progress:
+    patch:
+      operationId: updateProjectProgress
+      description: Stages advance only as PLANNING to WEEK_1 to WEEK_2 to COMPLETED.
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProgressUpdateRequest' }
+      responses:
+        '200':
+          description: Progress updated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProjectResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { description: Missing or invalid authentication }
+        '403': { description: Subject lacks permission }
+        '404': { description: Project not found }
+        '409':
+          description: Stage skipped or moved backward
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+
+  /projects/{projectId}/share:
+    post:
+      operationId: shareProject
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Project shared to the public feed
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProjectResponse' }
+        '401': { description: Missing or invalid authentication }
+        '403': { description: Only the Project Owner can share the project }
+        '404': { description: Project not found }
+        '409':
+          description: Project is not COMPLETED
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+
+  /feed/projects:
+    get:
+      operationId: getSharedProjectsFeed
+      security: []
+      responses:
+        '200':
+          description: Shared completed projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/ProjectResponse' }
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    TagCategory:
+      type: object
+      required: [category, roles]
+      properties:
+        category: { type: string, example: Music }
+        roles:
+          type: array
+          items: { type: string }
+          example: [Guitarist, Drummer, Vocalist]
+
+    NewProfile:
+      type: object
+      required: [displayName, primaryCategory, skillRole]
+      properties:
+        displayName: { type: string, example: Alex Rivera }
+        bio: { type: string, example: Guitarist looking for an indie band. }
+        primaryCategory: { type: string, example: Music }
+        skillRole: { type: string, example: Guitarist }
+        mediaUrls:
+          type: array
+          items: { type: string, format: uri }
+          example: [https://example.com/guitar-demo.mp4]
+
+    ProfileResponse:
+      allOf:
+        - $ref: '#/components/schemas/NewProfile'
+        - type: object
+          required: [id, userId]
+          properties:
+            id: { type: string, format: uuid }
+            userId: { type: string, format: uuid }
+
+    NewGroupListing:
+      type: object
+      required: [groupName, category, creatorSkillRole, neededRoles]
+      properties:
+        groupName: { type: string, example: Ankara Indie Collective }
+        description: { type: string }
+        category: { type: string, example: Music }
+        creatorSkillRole: { type: string, example: Guitarist }
+        neededRoles:
+          type: array
+          minItems: 1
+          items: { type: string }
+          example: [Drummer, Vocalist]
+
+    GroupMember:
+      type: object
+      required: [userId, memberRole, skillRole]
+      properties:
+        userId: { type: string, format: uuid }
+        memberRole:
+          type: string
+          enum: [OWNER, MEMBER]
+        skillRole: { type: string, example: Drummer }
+
+    AddMemberRequest:
+      type: object
+      required: [userId, skillRole]
+      properties:
+        userId: { type: string, format: uuid }
+        skillRole: { type: string, example: Drummer }
+
+    GroupListingResponse:
+      allOf:
+        - $ref: '#/components/schemas/NewGroupListing'
+        - type: object
+          required: [id, members]
+          properties:
+            id: { type: string, format: uuid }
+            members:
+              type: array
+              items: { $ref: '#/components/schemas/GroupMember' }
+
+    NewProject:
+      type: object
+      required: [groupId, title]
+      properties:
+        groupId: { type: string, format: uuid }
+        title: { type: string, example: First EP Recording }
+        description: { type: string }
+
+    ProgressUpdateRequest:
+      type: object
+      required: [progressStage]
+      properties:
+        progressStage:
+          type: string
+          enum: [PLANNING, WEEK_1, WEEK_2, COMPLETED]
+          example: WEEK_1
+
+    ProjectResponse:
+      allOf:
+        - $ref: '#/components/schemas/NewProject'
+        - type: object
+          required: [id, progressStage, isShared]
+          properties:
+            id: { type: string, format: uuid }
+            progressStage:
+              type: string
+              enum: [PLANNING, WEEK_1, WEEK_2, COMPLETED]
+            isShared: { type: boolean }
+
+    Problem:
+      type: object
+      required: [title, status, code]
+      properties:
+        title: { type: string }
+        status: { type: integer }
+        code: { type: string }
+        detail: { type: string }
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters or payload
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example:
+            title: Invalid Request
+            status: 400
+            code: INVALID_INPUT
+            detail: Required field skillRole is missing.
