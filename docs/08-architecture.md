@@ -49,12 +49,16 @@ C4Context
 
 **Relationship notes (read with the diagram):**
 
-- The media host has **no runtime integration** with Co-Hobby: the platform only stores user-provided URLs in profiles; nothing flows from the host into the system.
+- The media host has **no runtime integration** with Co-Hobby: the platform only stores user-provided URLs in profiles; nothing flows from the host into the system. The arrow direction here deliberately corrects the Sprint 1 sketch, which drew this relationship as `Media → System`.
 - **Platform Administrators are omitted on purpose** — the first release has no moderation or administration features (deferred in `docs/01-project-proposal.md`).
 - Local development uses HTTP; deployed environments require HTTPS (`docs/02-vision-and-boundary.md`).
 
-> If the C4Context block does not render in your viewer, use the Mermaid source in `docs/diagrams/c4-context.md`
-> and the exported PNG; both are committed in this repository.
+**Element shapes:** stick figures = people (actors), blue-grey box = Co-Hobby itself, lighter boxes = external systems. Arrows show the direction a request or data reference flows.
+
+> If the C4Context block does not render in your viewer, use the standalone Mermaid source in
+> [`docs/diagrams/c4-context.md`](../diagrams/c4-context.md) or the PNG export
+> `docs/diagrams/c4-context.png` (generate it with <https://mermaid.live>; commit it together with
+> the Issue #32 content work).
 
 ### 3.2 Level 2 — Containers (Issue #32)
 
