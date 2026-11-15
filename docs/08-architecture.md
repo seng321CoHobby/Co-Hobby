@@ -32,20 +32,26 @@ hosting; no chat/payments/notifications in the first release.>
 
 ```mermaid
 C4Context
-    title Co-Hobby Platform - C4 Level 1: System Context Diagram
-    Person(hobbyist, "Solo Hobbyist", "Hobbyist looking for groups with open skill vacancies")
-    Person(owner, "Project Owner", "Creates groups, assigns members, tracks project progress")
-    System(System, "Co-Hobby Platform", "Profiles, group discovery, sequential milestones, completed-project sharing")
-    System_Ext(Auth, "Identity Provider / OAuth Stub", "Issues and verifies JWT identity claims")
-    System_Ext(Media, "External Media Host", "Hosts portfolio media referenced by URL")
+    title System Context diagram for Co-Hobby Platform
+    Person(hobbyist, "Solo Hobbyist", "Finds groups by hobby category and open skill role; keeps a hobbyist profile")
+    Person(owner, "Project Owner", "Creates groups, assigns members to open roles, tracks project milestones")
+    System(System, "Co-Hobby Platform", "Hobby profiles, group discovery, sequential milestones, completed-project sharing")
+    System_Ext(Auth, "Identity Provider", "External OAuth provider; a local JWT stub keeps the same boundary during development")
+    System_Ext(Media, "External Media Host", "Hosts portfolio media; the platform stores URLs only")
 
-    Rel(hobbyist, System, "Profile, group search, feed requests")
-    Rel(owner, System, "Group, member, and project requests")
-    Rel(System, Auth, "Token verification request")
-    Rel(Auth, System, "Validated identity claims")
-    Rel(hobbyist, Media, "Uploads portfolio media")
-    Rel(Media, System, "Media URLs referenced by the platform")
+    Rel(hobbyist, System, "Creates profile, searches groups, browses feed", "HTTPS / JSON")
+    Rel(owner, System, "Creates groups, assigns members, manages projects", "HTTPS / JSON")
+    Rel(System, Auth, "Verifies Bearer JWT", "HTTPS")
+    Rel(Auth, System, "Returns validated identity claims", "HTTPS")
+    Rel(hobbyist, Media, "Uploads portfolio media", "HTTPS")
+    Rel(System, Media, "References media by stored URL (no runtime call)")
 ```
+
+**Relationship notes (read with the diagram):**
+
+- The media host has **no runtime integration** with Co-Hobby: the platform only stores user-provided URLs in profiles; nothing flows from the host into the system.
+- **Platform Administrators are omitted on purpose** — the first release has no moderation or administration features (deferred in `docs/01-project-proposal.md`).
+- Local development uses HTTP; deployed environments require HTTPS (`docs/02-vision-and-boundary.md`).
 
 > If the C4Context block does not render in your viewer, use the Mermaid source in `docs/diagrams/c4-context.md`
 > and the exported PNG; both are committed in this repository.
