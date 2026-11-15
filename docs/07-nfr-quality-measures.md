@@ -1,6 +1,6 @@
 # Non-Functional Requirements and Quality-Measure Specifications
 
-**Course:** BM321 Software Engineering
+**Course:** SENG 321 Software Engineering
 **Team:** 19
 **Project:** Co-Hobby
 **Sprint:** 2
