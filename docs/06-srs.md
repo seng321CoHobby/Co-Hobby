@@ -19,10 +19,27 @@ This document specifies the functional, data and interface requirements of Co-Ho
 
 ### 1.2 Scope
 
-Co-Hobby helps people who struggle to find nearby partners for a hobby to create a hobbyist profile, find or form groups, fill open roles, track project progress, and share completed projects. The scope is identical to the Sprint 1 first-release scope (`docs/01-project-proposal.md`); this document refines it and does not expand it. `[CONFIRM against docs/01]`
+Co-Hobby is a web platform where hobbyists build skill profiles, find open groups by hobby category and needed skill role, and then track and share the projects their groups complete. The scope is identical to the first-release scope in `docs/01-project-proposal.md`; this document refines it and does not expand it.
 
-- **Included:** hobbyist profile creation, group creation with open roles, group discovery, member assignment by the Project Owner, project initialization, sequential milestone progression, sharing completed projects to a public feed (US-01 to US-07).
-- **Deferred:** selling services; becoming a general social media platform.
+**Intended outcome:** a registered hobbyist can filter open groups by category and needed role and be added to a compatible group in less than three minutes during a usability test; after a group is formed, the Project Owner can track the project through sequential milestones and publish it to the public feed.
+
+**Included in the first release (US-01 to US-07)**
+
+- Predefined hobby categories and skill roles.
+- Hobbyist profiles with external media URLs.
+- Group creation and category/role search.
+- Owner-controlled assignment to open skill roles.
+- Sequential project milestones (PLANNING → WEEK_1 → WEEK_2 → COMPLETED).
+- Completed-project sharing and a public feed.
+
+**Deferred (outside the first release)**
+
+- Real-time chat; swipe-based matching; voice and video calls.
+- Payments, selling services and advertising.
+- Automated email or push notifications; live GPS tracking.
+- Administration and moderation panels.
+- Raw media hosting (media stays on external hosts).
+- Implementation of an identity provider.
 
 ### 1.3 Definitions and Abbreviations
 
@@ -36,6 +53,7 @@ Co-Hobby helps people who struggle to find nearby partners for a hobby to create
 | Open Role | A needed skill role of a group that has no member assigned yet |
 | Public Feed | List of completed projects that were shared by their Project Owner |
 | JWT | JSON Web Token sent as a Bearer token to authenticate API requests |
+| Identity Provider / OAuth stub | External service that issues identity tokens; a documented local JWT stub with the same API boundary is used in development |
 
 ### 1.4 References
 
@@ -50,46 +68,56 @@ Co-Hobby helps people who struggle to find nearby partners for a hobby to create
 
 **User classes**
 
-- **Solo Hobbyist:** a registered user looking for a group for a hobby. Can create a profile, search groups and view the public feed. Browsing categories, searching groups and reading the feed do not require login.
+- **Solo Hobbyist:** a registered user looking for a group for a hobby. Can create a profile, search groups and view the public feed. Reading categories, searching groups and browsing the feed are public and do not require login.
 - **Project Owner:** a Hobbyist who created a group. Additionally can assign members, create the project, advance milestones and share the completed project.
-- **API clients:** the client applications that call the API (e.g. the web frontend). `[CONFIRM against docs/02]`
 
-**Operating environment:** the system is a web API (`api/openapi.yaml`, version 0.1.0) served under the `/api/v1` base path, over HTTP locally and HTTPS when deployed.
+**External systems**
+
+- **Identity Provider / OAuth stub:** issues the identity tokens that the system verifies. Its implementation is outside the system.
+- **External media hosts:** host portfolio media that profiles reference by URL. The system stores URLs only.
+
+**Operating environment:** the first release supports web users. The system is a web API (`api/openapi.yaml`, version 0.1.0) served under the `/api/v1` base path, over HTTP locally and HTTPS when deployed.
 
 **Constraints**
 
-- All operations require a Bearer JWT except `getTags`, `listAvailableGroups` and `getSharedProjectsFeed`, which are public.
+- Requests and responses use JSON. Validation and domain errors use `application/problem+json` (the `Problem` schema).
+- `GET /tags`, `GET /groups` and `GET /feed/projects` are public; all other operations require a Bearer JWT.
 - Mutations on a group or project (adding members, creating a project, advancing progress, sharing) are restricted to the OWNER and return 403 otherwise.
-- Project stages advance sequentially only (PLANNING → WEEK_1 → WEEK_2 → COMPLETED).
-- Errors use the `Problem` schema (`application/problem+json`).
+- Project stages advance sequentially only; only completed projects can be shared.
 - No feature beyond US-01 to US-07.
 
-**Assumptions and risks**
+**Assumptions** (from `docs/01`)
 
-- Users create one profile each and use real information.
-- Risk: fake self-created accounts could be used to boost the visibility of a group or project.
-- Risk: the platform could be used to promote paid services, which is outside the first-release scope.
+- Users provide accurate profile and skill information; required fields and predefined tags support this.
+- Owners and hobbyists agree on initial join interest outside the platform before an owner adds a member.
+- Users can provide external URLs for portfolio media.
 
-`[CONFIRM wording against docs/01 and docs/02]`
+**Risks** (from `docs/01`)
+
+- A user is added twice or assigned to a role that is already filled → the system returns 409.
+- An owner skips project stages or shares an unfinished project → the system enforces sequential transitions and returns 409.
+- The identity provider is unavailable during development → a local JWT stub with the same API boundary is used.
+- Public pages (groups, feed) may show fake or inappropriate content because moderation tools are deferred → every write requires authentication and only completed projects can be shared.
+- The scope grows beyond what the team can deliver in the sprint schedule → the deferred list stays explicit.
 
 ## 3. Functional Requirements
 
-Each requirement maps to exactly one user story. No scope is added beyond the seven stories. Acceptance criteria are written from the API contract. `[CONFIRM wording against docs/05-product-backlog.md]`
+Each requirement maps to exactly one user story. No scope is added beyond the seven stories. Acceptance criteria follow `docs/05-product-backlog.md`; where the API contract adds detail (for example 403 or 404 responses), the contract is followed.
 
 ### 3.1 Epic 1 — Hobbyist Identity
 
 | ID | Requirement | User Story | Acceptance Criteria |
 |---|---|---|---|
 | FR-1.1 | The system shall provide predefined hobby categories and skill roles. | US-01 | `GET /tags` returns an array of categories, each with its roles, with 200 and without authentication. |
-| FR-1.2 | The system shall allow a registered user to create a hobbyist profile. | US-01 | A request with `displayName`, `primaryCategory` and `skillRole` (and optional `bio`, `mediaUrls`) returns 201 with the profile; a missing required field returns 400; a missing or invalid token returns 401. |
+| FR-1.2 | The system shall allow a registered user to create a hobbyist profile. | US-01 | A request with `displayName`, `primaryCategory` and `skillRole` (and optional `bio`, `mediaUrls`) returns 201 with the profile; a missing required field or an invalid media URL returns 400; a missing or invalid token returns 401. |
 
 ### 3.2 Epic 2 — Group Formation
 
 | ID | Requirement | User Story | Acceptance Criteria |
 |---|---|---|---|
 | FR-2.1 | The system shall allow a creator to create a group with open roles. | US-02 | A request with `groupName`, `category`, `creatorSkillRole` and at least one entry in `neededRoles` returns 201 and the creator is the OWNER; a missing field or empty `neededRoles` returns 400; no token returns 401. |
-| FR-2.2 | The system shall allow searching groups by category and role. | US-03 | `GET /groups` with the required `category` and optional `seekingRole` returns the matching open groups with 200, without authentication; a missing or invalid `category` returns 400. |
-| FR-2.3 | The system shall allow the Project Owner to assign a member to an open role. | US-04 | The OWNER can submit `userId` and `skillRole` and receives 200 with the updated group; a non-owner gets 403; an unknown group or user gets 404; a duplicate member or a filled role gets 409 (ROLE_SLOT_FULL). |
+| FR-2.2 | The system shall allow searching groups by category and role. | US-03 | `GET /groups` with the required `category` and optional `seekingRole` returns 200 with the matching open groups, or an empty list when none match, without authentication; a missing `category` returns 400. |
+| FR-2.3 | The system shall allow the Project Owner to assign a member to an open role. | US-04 | The OWNER submits `userId` and `skillRole` and receives 200 with the updated group, in which the user is a MEMBER; a non-owner gets 403; an unknown group or user gets 404; a duplicate member or a filled role gets 409 (ROLE_SLOT_FULL). |
 
 ### 3.3 Epic 3 — Project Execution and Showcase
 
@@ -97,7 +125,7 @@ Each requirement maps to exactly one user story. No scope is added beyond the se
 |---|---|---|---|
 | FR-3.1 | The system shall allow the Project Owner to initialize a project in PLANNING. | US-05 | The OWNER submits `groupId` and `title` and receives 201 with `progressStage` PLANNING and `isShared` false; a non-owner gets 403; an unknown group gets 404. |
 | FR-3.2 | The system shall allow sequential milestone advancement only. | US-06 | The OWNER submits the next `progressStage` and receives 200; skipping a stage or moving backward returns 409; a non-owner gets 403; an unknown project gets 404. |
-| FR-3.3 | The system shall allow sharing completed projects to a public feed. | US-07 | The OWNER can share a COMPLETED project and receives 200 with `isShared` true; a project that is not COMPLETED returns 409; `GET /feed/projects` returns the shared projects without authentication. |
+| FR-3.3 | The system shall allow sharing completed projects to a public feed. | US-07 | The OWNER can share a COMPLETED project and receives 200 with `isShared` true; sharing a project that is not COMPLETED returns 409; `GET /feed/projects` returns the shared projects with 200 without authentication. |
 
 ## 4. Use Cases
 
