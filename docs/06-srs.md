@@ -59,6 +59,14 @@ Co-Hobby is a web platform where hobbyists build skill profiles, find open group
 - `api/openapi.yaml` — API contract (source of truth for interfaces)
 - Course slides: Requirements Engineering; OOAD & UML; Software Architecture
 
+### 1.5 Document Conventions
+
+- Requirements are numbered sentences with unique IDs: `FR-<epic>.<number>`. Each requirement maps to one user story (`US-xx`), one or more use cases (`UC-xx`) and API operations (by operationId).
+- "Shall" marks a mandatory requirement. Nothing in this document is optional for the first release.
+- In use cases, the main flow is numbered 1, 2, 3...; error flows are `E1, E2...` and alternative flows are `A1, A2...`, each with its HTTP status where the API defines one.
+- Use cases follow the scenario structure of the course slides: starting situation (preconditions), normal flow of events, what can go wrong (alternate/error flows) and the state when the scenario finishes (postconditions).
+- Key terms and field names are written in `code font`.
+
 ## 2. Overall Description
 
 **User classes**
@@ -101,12 +109,16 @@ Each requirement maps to exactly one user story. No scope is added beyond the se
 
 ### 3.1 Epic 1 — Hobbyist Identity
 
+**Rationale:** owners can only judge a candidate if the profile states a category and a skill role; predefined tags keep profiles comparable and searchable.
+
 | ID | Requirement | User Story | Acceptance Criteria |
 |---|---|---|---|
 | FR-1.1 | The system shall provide predefined hobby categories and skill roles. | US-01 | `GET /tags` returns an array of categories, each with its roles, with 200 and without authentication. |
 | FR-1.2 | The system shall allow a registered user to create a hobbyist profile. | US-01 | A request with `displayName`, `primaryCategory` and `skillRole` (and optional `bio`, `mediaUrls`) returns 201 with the profile; a missing required field or an invalid media URL returns 400; a missing or invalid token returns 401. |
 
 ### 3.2 Epic 2 — Group Formation
+
+**Rationale:** general-purpose channels cannot filter by category and needed role or show open vacancies (see `docs/01`, problem statement); explicit open roles and owner-controlled assignment make vacancies clear and prevent double assignment.
 
 | ID | Requirement | User Story | Acceptance Criteria |
 |---|---|---|---|
@@ -116,6 +128,8 @@ Each requirement maps to exactly one user story. No scope is added beyond the se
 
 ### 3.3 Epic 3 — Project Execution and Showcase
 
+**Rationale:** informal groups lose momentum without progress tracking and finished work is hard to showcase; sequential milestones and a public feed address both.
+
 | ID | Requirement | User Story | Acceptance Criteria |
 |---|---|---|---|
 | FR-3.1 | The system shall allow the Project Owner to initialize a project in PLANNING. | US-05 | The OWNER submits `groupId` and `title` and receives 201 with `progressStage` PLANNING and `isShared` false; a non-owner gets 403; an unknown group gets 404. |
@@ -124,7 +138,30 @@ Each requirement maps to exactly one user story. No scope is added beyond the se
 
 ## 4. Use Cases
 
-Each use case lists its actors, preconditions, main flow, alternate/error flows and postconditions.
+**Use case model**
+
+```mermaid
+flowchart LR
+    Hobbyist([Hobbyist])
+    Owner([Project Owner])
+    Owner -->|is a| Hobbyist
+    subgraph System[Co-Hobby Platform]
+        UC01((UC-01 Create Profile))
+        UC02((UC-02 Create Group))
+        UC03((UC-03 Discover Groups))
+        UC04((UC-04 Assign Member to an Open Role))
+        UC05((UC-05 Advance Milestones and Share Project))
+    end
+    Hobbyist --- UC01
+    Hobbyist --- UC03
+    Hobbyist -. member added .- UC04
+    Hobbyist -. reads public feed .- UC05
+    Owner --- UC02
+    Owner --- UC04
+    Owner --- UC05
+```
+
+Each use case below lists its actors, preconditions, main flow, alternate/error flows and postconditions.
 
 ### UC-01 Create Profile (US-01)
 
