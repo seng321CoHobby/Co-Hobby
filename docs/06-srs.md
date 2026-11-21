@@ -4,12 +4,7 @@
 **Team:** 19
 **Project:** Co-Hobby
 **Sprint:** 2
-**Status:** Draft — skeleton prepared by @Bruhun, authored by @beyazitKRGL (Issue #26)
-
-> This document expands the Sprint 1 project proposal, system boundary, and initial backlog
-> into a detailed SRS. It must not introduce features beyond the Sprint 1 first-release scope
-> (US-01 through US-07). Follow the structure of the lecturer's Sprint 1 examples pack and the
-> requirements-engineering slide notation.
+**Status:** Ready for review — authored by @beyazitKRGL (Issue #26)
 
 ## 1. Introduction
 
@@ -129,8 +124,7 @@ Each requirement maps to exactly one user story. No scope is added beyond the se
 
 ## 4. Use Cases
 
-> House style: actor, preconditions, main flow, alternate/error flows, postconditions.
-> UC-04 is written out fully as the example to copy for the others.
+Each use case lists its actors, preconditions, main flow, alternate/error flows and postconditions.
 
 ### UC-01 Create Profile (US-01)
 
@@ -180,7 +174,7 @@ Each requirement maps to exactly one user story. No scope is added beyond the se
   - A1: No group matches → system returns 200 with an empty list.
 - **Postconditions:** None; no data is changed.
 
-### UC-04 Assign Member to an Open Role (US-04) — EXAMPLE
+### UC-04 Assign Member to an Open Role (US-04)
 
 - **Primary actor:** Project Owner
 - **Secondary actor:** Hobbyist (member being added)
@@ -200,6 +194,7 @@ Each requirement maps to exactly one user story. No scope is added beyond the se
   - E2: Requester is not OWNER → 403.
   - E3: Unknown group or user ID → 404.
   - E4: Duplicate member or role already filled → 409 (ROLE_SLOT_FULL).
+  - E5: Invalid or incomplete request body (e.g. userId or skillRole is missing) → 400.
 - **Postconditions:** Role vacancy is filled; group contains the new MEMBER.
 
 ### UC-05 Advance Milestones and Share Project (US-05, US-06, US-07)
@@ -273,8 +268,7 @@ See `docs/07-nfr-quality-measures.md`.
 
 ## 8. Requirements Traceability Matrix
 
-> The API-operation column is pre-filled from `api/openapi.yaml` (contract source of truth).
-> FR and UC references match sections 3 and 4.
+Each row traces a functional requirement to its user story, use case and API operation. Operation names come from `api/openapi.yaml`.
 
 | FR | User Story | Use Case | API Operation(s) |
 |---|---|---|---|
