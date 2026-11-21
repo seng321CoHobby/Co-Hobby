@@ -18,8 +18,8 @@ external tool.
 
 | Diagram | Source / Editor | Export File | Issue |
 |---|---|---|---|
-| C4 Level 1 — System Context | `docs/08-architecture.md` (Mermaid C4Context) | `c4-context.png` | #32 |
-| C4 Level 2 — Containers | `docs/08-architecture.md` | `c4-containers.png` | #32 |
+| C4 Level 1 — System Context | `docs/diagrams/c4-context.md` (Mermaid) | `c4-context.png` | #32 |
+| C4 Level 2 — Containers | `docs/diagrams/c4-containers.md` (Mermaid) | `c4-containers.png` | #32 |
 | UML Use-Case Diagram | `docs/diagrams/uml-use-case.md` | `uml-use-case.png` | #33 |
 | UML Milestone State Diagram | `docs/diagrams/uml-state.md` | `uml-state.png` | #33 |
 | UML Domain Class Diagram | `docs/diagrams/uml-class.md` | `uml-class.png` | #34 |
