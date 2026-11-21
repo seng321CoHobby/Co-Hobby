@@ -4,7 +4,7 @@
 **Team:** 19
 **Project:** Co-Hobby
 **Sprint:** 2
-**Status:** Draft — skeleton prepared by @Bruhun, authored by @Bruhun (Issue #32) and @bakicanerdogan (Issue #34)
+**Status:** Ready for review — authored by @Bruhun (Issue #32); UML class and sequence diagrams by @bakicanerdogan (Issue #34)
 
 > Document the architecture using C4 models and UML diagrams.
 > Diagram sources live in this file and in `docs/diagrams/`; commit PNG exports alongside them
@@ -170,7 +170,9 @@ Intentionally omitted. Issue #32 asks for Level 3 only if the assessment rubric 
 ## 5. UML Diagrams
 
 - Use-case diagram and milestone state diagram: `docs/diagrams/` (Issue #33, @Bruhun)
-- Domain class diagram and API sequence diagrams: `docs/diagrams/` (Issue #34, @bakicanerdogan)
+- Domain class diagram (Issue #34, @bakicanerdogan): [`uml-class.md`](diagrams/uml-class.md) / [`uml-class.png`](diagrams/uml-class.png)
+- Sequence diagram, `addGroupMember` (Issue #34, @bakicanerdogan): [`uml-seq-add-member.md`](diagrams/uml-seq-add-member.md) / [`uml-seq-add-member.png`](diagrams/uml-seq-add-member.png)
+- Sequence diagram, `updateProjectProgress` (Issue #34, @bakicanerdogan): [`uml-seq-progress.md`](diagrams/uml-seq-progress.md) / [`uml-seq-progress.png`](diagrams/uml-seq-progress.png)
 
 > Diagrams are committed as Mermaid sources and PNG exports and are cross-referenced from
 > `docs/06-srs.md` use cases.
