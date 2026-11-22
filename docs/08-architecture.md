@@ -110,6 +110,11 @@ Reference NFR-R-01.>
 > Diagrams are committed as Mermaid sources and PNG exports and are cross-referenced from
 > `docs/06-srs.md` use cases.
 
+### 5.1 Use-Case and Milestone State Diagrams (Issue #33)
+
+- Use-case diagram: [`uml-use-case.md`](diagrams/uml-use-case.md) / [`uml-use-case.png`](diagrams/uml-use-case.png). Actors Hobbyist, Project Owner (generalization of Hobbyist) and External Identity Provider; nine use cases tagged with US-01 to US-07 and SRS UC-01 to UC-05; every authenticated use case includes *Authenticate*.
+- Milestone state diagram: [`uml-state.md`](diagrams/uml-state.md) / [`uml-state.png`](diagrams/uml-state.png). PLANNING → WEEK_1 → WEEK_2 → COMPLETED, with 409 self-transitions for skipped or backward stages and for sharing before COMPLETED; sharing is a substate of COMPLETED.
+
 ## 6. Consistency with Sprint 1 Boundary
 
 - C4 Level 1 must not add actors, external systems, or responsibilities missing from `docs/02-vision-and-boundary.md`.

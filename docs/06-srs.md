@@ -161,3 +161,10 @@ See `docs/07-nfr-quality-measures.md`.
 | FR-3.1 | US-05 | UC-05 | createProject |
 | FR-3.2 | US-06 | UC-05 | updateProjectProgress |
 | FR-3.3 | US-07 | UC-05 | shareProject, getSharedProjectsFeed |
+
+## 9. UML Models
+
+The use cases in §4 and the milestone rules in FR-3.2 and FR-3.3 are modelled in UML:
+
+- Use-case diagram ([`diagrams/uml-use-case.md`](diagrams/uml-use-case.md), PNG [`diagrams/uml-use-case.png`](diagrams/uml-use-case.png)): every use case is tagged with its user story and its UC-01 to UC-05 identifier.
+- Project milestone state diagram ([`diagrams/uml-state.md`](diagrams/uml-state.md), PNG [`diagrams/uml-state.png`](diagrams/uml-state.png)): the states and 409 conflict transitions behind UC-05, FR-3.2 and FR-3.3.
