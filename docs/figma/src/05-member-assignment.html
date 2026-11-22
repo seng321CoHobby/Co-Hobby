@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>05 Owner Member Assignment</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .opt-row { display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--line-strong); border-radius: 2px; padding: 10px 12px; margin-bottom: 8px; }
+  .opt-row.sel { border-color: var(--blue); background: var(--blue-soft); }
+  .radio { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--line-strong); display: inline-block; margin-right: 10px; vertical-align: -3px; background: #fff; }
+  .sel .radio { border: 5px solid var(--blue); }
+</style>
+</head>
+<body>
+<div class="window">
+  <header class="topbar">
+    <div class="logo"><span class="mark">Co</span>Co-Hobby</div>
+    <nav class="tabs"><a>Feed</a><a class="on">Find groups</a><a>Create group</a><a>My project</a></nav>
+    <div class="user"><span class="avatar">AD</span>Ahmet Demir · owner</div>
+  </header>
+
+  <main class="page">
+    <div class="crumb">Ankara Indie Collective / Assign member</div>
+    <div class="head"><div><h1>Assign a member to an open role</h1><p class="lead">Enter the hobbyist's user ID and choose the role they will fill.</p></div></div>
+
+    <div class="two">
+      <section>
+        <div class="alert err" style="margin-bottom:16px"><b>Role Vacancy Full</b>The Drummer vacancy has already been filled.<div class="code">409 · ROLE_SLOT_FULL</div></div>
+
+        <div class="field"><label>Hobbyist user ID <span class="req">*</span></label><div class="input mono">7c9e6679-7425-40de-944b-e07fc1f90ae7</div><div class="hint">The hobbyist finds this ID on their profile after creating it.</div></div>
+        <div class="field">
+          <label>Role to fill <span class="req">*</span></label>
+          <div class="opt-row sel"><span><span class="radio"></span><b>Drummer</b></span><span class="status filled">Just filled</span></div>
+          <div class="opt-row"><span><span class="radio"></span><b>Vocalist</b></span><span class="status open">Open</span></div>
+          <div class="hint">Only roles from this group's <span class="mono">neededRoles</span> are listed.</div>
+        </div>
+        <div class="actions"><span class="hint" style="margin:0 auto 0 0">The member joins with the MEMBER role.</span><span class="btn">Cancel</span><span class="btn primary">Assign member</span></div>
+      </section>
+
+      <aside class="stack">
+        <div><div class="caption">Success, 200</div><div class="alert ok"><b>Member assigned</b>Drummer is now filled. The group refreshes from the returned group.</div></div>
+        <div><div class="caption">Group or user not found, 404</div><div class="alert err"><b>Not found</b>Check the user ID and try again.<div class="code">404</div></div></div>
+        <div><div class="caption">Not the owner, 403</div><div class="alert warn"><b>Only the Project Owner can add members</b>You are not the OWNER of this group.<div class="code">403</div></div></div>
+        <div><div class="caption">Duplicate member, 409</div><div class="alert err"><b>Already a member</b>This user is already in the group.<div class="code">409</div></div></div>
+        <div><div class="caption">Invalid input, 400</div><div class="alert err"><b>Invalid Request</b>Required field skillRole is missing.<div class="code">400 · INVALID_INPUT</div></div></div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<aside class="notes">
+  <h4>Prototype notes — Screen 05 · US-04 / UC-04</h4>
+  <ul>
+    <li>Submit: <code>POST /groups/{groupId}/members</code> (<code>addGroupMember</code>) with <code>AddMemberRequest</code>: <code>userId</code>*, <code>skillRole</code>*.</li>
+    <li><code>200</code> → <code>GroupListingResponse</code>; the new member has <code>memberRole</code> MEMBER.</li>
+    <li><code>409</code> → duplicate member or filled role (<code>ROLE_SLOT_FULL</code>) shown at the top of the form; the stale role is marked filled.</li>
+    <li><code>403</code> → non-owner; <code>404</code> → unknown group or user; <code>400</code> → missing field; <code>401</code> → sign-in notice.</li>
+    <li>Reached from the owner actions on Screen 04. The user ID is the one returned on Screen 02.</li>
+    <li>Message text comes from the <code>Problem</code> body (<code>title</code>, <code>detail</code>, <code>code</code>).</li>
+  </ul>
+</aside>
+</body>
+</html>
