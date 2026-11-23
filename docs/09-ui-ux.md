@@ -48,7 +48,7 @@ Use case and requirement numbers follow `docs/06-srs.md` (UC-01 to UC-05, FR-1.1
 
 ### 2.1 States Shown per Screen
 
-Each screen shows its success state and its main error or empty states. Status codes that are not drawn are listed in the screen's notes band (marked "notes" below). Errors are rendered from the `Problem` body (`title`, `detail`, `code`).
+Each screen shows its success state and its main error or empty states. Status codes that are not drawn are listed in the screen's notes band (marked "notes" below). `400` and `409` errors are rendered from the `Problem` body (`title`, `detail`, `code`); `401`, `403` and `404` have no body in the contract, so their messages are fixed UI text.
 
 | # | Success | Error / Empty States |
 |---|---|---|
@@ -71,6 +71,8 @@ Each screen shows its success state and its main error or empty states. Status c
 - **No member names.** `GroupMember` carries only `userId`, `memberRole` and `skillRole`, so members are shown by role and a shortened ID.
 - **No project media.** `ProjectResponse` has no media field, so feed entries are text-only; portfolio media stays on profiles as external URLs.
 - **Next stage only.** The milestone board offers only the next stage; `409` is still handled for stale views.
+- **User ID is shown once.** The API has no operation to read a profile back, so the `userId` returned by `createProfile` (Screen 2) must be kept by the client; Screens 4 and 5 assume it is available.
+- **Only open groups are searchable.** `listAvailableGroups` returns open groups, and there is no operation to read a project or group by ID; the milestone board therefore relies on the project response kept from `createProject`.
 
 ## 3. User-Flow Diagrams (Issue #31)
 
