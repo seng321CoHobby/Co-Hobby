@@ -4,7 +4,7 @@
 **Team:** 19
 **Project:** Co-Hobby
 **Sprint:** 2
-**Status:** Draft — skeleton prepared by @Bruhun, authored by @bakicanerdogan (Issues #30, #31), product input @beyazitKRGL
+**Status:** Ready for review — skeleton prepared by @Bruhun, authored by @bakicanerdogan (Issues #30, #31), product input @beyazitKRGL
 
 > The UI/UX deliverable is the Figma project **including user-flow diagrams**.
 > This document links the Figma file and commits exported PNGs so the artifacts survive
@@ -13,7 +13,7 @@
 ## 1. Figma Project
 
 - **Figma link (public view-only):** https://www.figma.com/design/SqIaYZLZ0fSslWjnXHuRf8/Co-Hobby-Sprint-2-UI-UX
-- **Figma file:** "Co-Hobby Sprint 2 UI/UX", page **Screens** (one 1440 px frame per screen, named as in §2).
+- **Figma file:** "Co-Hobby Sprint 2 UI/UX", page **Screens** (one 1440 px frame per screen, named as in §2) and page **User Flows** (one 1440 px frame per flow, named as in §3).
 - **Figma workspace owner:** @bakicanerdogan
 - **Product owner consulted:** @beyazitKRGL
 - If the link is set to private/restricted, this deliverable cannot be graded.
@@ -76,25 +76,91 @@ Each screen shows its success state and its main error or empty states. Status c
 
 ## 3. User-Flow Diagrams (Issue #31)
 
-> Draw the flows **inside Figma/FigJam** (as the assignment requires flows as part of the Figma
-> deliverable), then export PNGs into `docs/diagrams/` and embed them here.
-> Mark decision points and error branches (400, 403, 404, 409) on the flows.
+The three core journeys are drawn in the same Figma file on the page **User Flows**, one 1440 px frame per flow, and exported at 2x into [`docs/diagrams/`](diagrams/). All three use the same notation:
 
-### Flow 1 — Find a Group and Join (Hobbyist Journey)
+- **White box:** a step or a neutral result, such as an empty search result. Screen numbers refer to §2, and operation names to `api/openapi.yaml`.
+- **Yellow diamond:** a decision.
+- **Green box:** a success response, or the end of a flow.
+- **Red box:** an error response.
+- **Dashed box and dashed dark arrow:** a step that happens outside the platform, such as sending the user ID to the owner.
+- **Dashed grey arrow:** the way back to an earlier step to try again, after an error, an empty search result or a role that is no longer open.
 
-<TODO: Figma frame/frame name, PNG path `docs/diagrams/user-flow-find-group.png`, and one-paragraph
-narration of the journey (search → view → join an open role) including error branches.>
+Status codes come from `api/openapi.yaml`. Every error response that an operation in the flow defines is drawn. The only exceptions are the `400` responses of `getTags` and `getSharedProjectsFeed`: neither operation takes input, so they do not create a decision in any flow.
+
+### Flow 1 — Find a Group and Join (the Owner Adds the Member)
+
+- **Figma frame:** page `User Flows`, frame `Flow 1 Find Group`
+- **Covers:** US-03, US-01, US-04 / UC-03, UC-01, UC-04
+
+![Flow 1: find a group and join](diagrams/user-flow-find-group.png)
+
+The hobbyist starts on the public feed (Screen 1) and opens the group search (Screen 3). There they pick a category and, optionally, the role they play; searching needs no sign-in. From the results they open a group (Screen 4) and check whether their role is still open. If it is not, they go back to the results.
+
+The API has no join operation, so the hobbyist cannot join by themselves (see §2.2). If they have no profile yet, they create one (Screen 2) and keep the `userId` that `createProfile` returns. They send this ID to the group's owner outside the platform. The owner then adds them on Screen 5 with `addGroupMember`. When it returns `200`, the hobbyist is a `MEMBER` in that role.
+
+| Step | Operation | Response | Branch |
+|---|---|---|---|
+| Search | `listAvailableGroups` | `400` (`INVALID_INPUT`) | `category` is missing or invalid; the hobbyist picks a category. |
+| Search | `listAvailableGroups` | `200` with `[]` | No group matches; the hobbyist changes the filters. |
+| Create profile | `createProfile` | `401` | Not signed in; the hobbyist signs in and retries. |
+| Create profile | `createProfile` | `400` (`INVALID_INPUT`) | A required field is missing or a media URL is invalid. |
+| Owner adds member | `addGroupMember` | `409` (`ROLE_SLOT_FULL`) | The role was filled in the meantime; the hobbyist picks another group. |
+| Owner adds member | `addGroupMember` | `409` (`ROLE_SLOT_FULL`) | The user is already a member of the group. |
+| Owner adds member | `addGroupMember` | `404` | The group or the user ID is unknown, for example a mistyped ID. |
+| Owner adds member | `addGroupMember` | `403` | The caller is not the group's `OWNER`. |
+| Owner adds member | `addGroupMember` | `401` | The owner is not signed in. |
+| Owner adds member | `addGroupMember` | `400` (`INVALID_INPUT`) | `userId` or `skillRole` is missing or invalid. |
 
 ### Flow 2 — Create a Group and Fill Vacancies (Project Owner Journey)
 
-<TODO: PNG path `docs/diagrams/user-flow-create-group.png`, narration of create → assign members →
-roles filled, including 401/403/409 branches.>
+- **Figma frame:** page `User Flows`, frame `Flow 2 Create Group`
+- **Covers:** US-02, US-04 / UC-02, UC-04
+
+![Flow 2: create a group and fill vacancies](diagrams/user-flow-create-group.png)
+
+The owner fills in the group creation form (Screen 8) with `groupName`, `category`, `creatorSkillRole` and at least one entry in `neededRoles`, and submits it with `createGroup`. When it returns `201`, the group exists and the creator is its `OWNER`. The open roles are the entries in `neededRoles` that no member's `skillRole` matches yet.
+
+A hobbyist who wants a role sends their user ID to the owner outside the platform. The owner enters this ID and the role on Screen 5 and calls `addGroupMember`. After each `200`, the owner checks whether any role is still open. This check is done by the client from `neededRoles` and `members`; the API does not return it. If a role is still open, the owner waits for the next candidate. When all roles are filled, the flow ends.
+
+| Step | Operation | Response | Branch |
+|---|---|---|---|
+| Create group | `createGroup` | `401` | Not signed in; the owner signs in and retries. |
+| Create group | `createGroup` | `400` (`INVALID_INPUT`) | `neededRoles` is empty or a required field is missing. |
+| Add member | `addGroupMember` | `409` (`ROLE_SLOT_FULL`) | The role is already filled. |
+| Add member | `addGroupMember` | `409` (`ROLE_SLOT_FULL`) | The user is already a member. As in SRS UC-04, both conflicts use the same code. |
+| Add member | `addGroupMember` | `404` | The group or the user is unknown. |
+| Add member | `addGroupMember` | `403` | Only the `OWNER` can add members. |
+| Add member | `addGroupMember` | `401` | Not signed in. |
+| Add member | `addGroupMember` | `400` (`INVALID_INPUT`) | `userId` or `skillRole` is missing or invalid. |
 
 ### Flow 3 — Project Milestones and Sharing (Project Owner Journey)
 
-<TODO: PNG path `docs/diagrams/user-flow-project-share.png`, narration of create project → advance
-stages sequentially → share → public feed, including 409 when a stage is skipped or the project
-is not COMPLETED.>
+- **Figma frame:** page `User Flows`, frame `Flow 3 Project Share`
+- **Covers:** US-05, US-06, US-07 / UC-05
+
+![Flow 3: project milestones and sharing](diagrams/user-flow-project-share.png)
+
+Once the group is formed, the owner creates a project on the milestone board (Screen 6) with the group's ID and a title. `createProject` returns `201` with the project in stage `PLANNING` and `isShared` set to `false`. The owner then moves the project forward one stage at a time with `updateProjectProgress`: `PLANNING` → `WEEK_1` → `WEEK_2` → `COMPLETED`. The flow loops on this step until the stage is `COMPLETED`.
+
+The owner then shares the project from the share dialog (Screen 7) with `shareProject`. When it returns `200`, `isShared` is `true` and the project appears in the public feed (Screen 1, `getSharedProjectsFeed`), which anyone can read without signing in.
+
+| Step | Operation | Response | Branch |
+|---|---|---|---|
+| Create project | `createProject` | `401` | Not signed in. |
+| Create project | `createProject` | `400` (`INVALID_INPUT`) | `title` or `groupId` is missing or invalid. |
+| Create project | `createProject` | `403` | Only the group's `OWNER` can create a project. |
+| Create project | `createProject` | `404` | The group is unknown. |
+| Advance stage | `updateProjectProgress` | `409` | A stage was skipped or the project was moved backward. The board offers only the next stage, so this mainly covers stale views. |
+| Advance stage | `updateProjectProgress` | `403` | Only the `OWNER` can advance the stage. |
+| Advance stage | `updateProjectProgress` | `404` | The project is unknown. |
+| Advance stage | `updateProjectProgress` | `400` (`INVALID_INPUT`) | `progressStage` is missing or not a known stage. |
+| Advance stage | `updateProjectProgress` | `401` | Not signed in. |
+| Share | `shareProject` | `409` | The project is not `COMPLETED` yet. |
+| Share | `shareProject` | `403` | Only the `OWNER` can share the project. |
+| Share | `shareProject` | `404` | The project is unknown. |
+| Share | `shareProject` | `401` | Not signed in. |
+
+`shareProject` defines no `400` response, so none is drawn.
 
 ## 4. Traceability and Review
 
@@ -103,6 +169,6 @@ is not COMPLETED.>
 | Artifact | Linked Story / Use Case | Figma Page/Frame | Export Path | Reviewer |
 |---|---|---|---|---|
 | Prototype (all screens) | US-01 … US-07 / UC-01 … UC-05 | Page `Screens`, frames `01`–`08` | `docs/figma/` (sources in `docs/figma/src/`) | @beyazitKRGL |
-| Find-group flow | US-03 | <TODO> | `docs/diagrams/` | @yigitozkaya07 |
-| Create-group flow | US-02, US-04 | <TODO> | `docs/diagrams/` | @yigitozkaya07 |
-| Project-share flow | US-05, US-06, US-07 | <TODO> | `docs/diagrams/` | @yigitozkaya07 |
+| Find-group flow | US-03 (with US-01, US-04) / UC-03, UC-01, UC-04 | Page `User Flows`, frame `Flow 1 Find Group` | `docs/diagrams/user-flow-find-group.png` | @yigitozkaya07 |
+| Create-group flow | US-02, US-04 / UC-02, UC-04 | Page `User Flows`, frame `Flow 2 Create Group` | `docs/diagrams/user-flow-create-group.png` | @yigitozkaya07 |
+| Project-share flow | US-05, US-06, US-07 / UC-05 | Page `User Flows`, frame `Flow 3 Project Share` | `docs/diagrams/user-flow-project-share.png` | @yigitozkaya07 |
