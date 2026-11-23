@@ -146,7 +146,7 @@ Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Cont
 | Yıldırım Beyazıt Köroğlu | [@beyazitKRGL](https://github.com/beyazitKRGL) | Product Owner | #26 | #42 | #44, #47 |
 | Mete Dugan | [@xa1res](https://github.com/xa1res) | Scrum Master | #24, #36 | #49, #53 | #55; #35 PR and #54 (pending) |
 | Enes Alp Erkmen | [@Bruhun](https://github.com/Bruhun) | Architect | #32, #33, #38 | #39, #41, #45, #46 | #40, #43, #44, #48, #49, #52 |
-| Hüseyin Yiğit Özkaya | [@yigitozkaya07](https://github.com/yigitozkaya07) | QA Engineer | #27, #28, #35 | #43, #44 | #42, #51 |
+| Hüseyin Yiğit Özkaya | [@yigitozkaya07](https://github.com/yigitozkaya07) | QA Engineer | #27, #28, #35 | #43, #44 | #42, #50, #51, #53 |
 | Abdullah Şar | [@sengProje64](https://github.com/sengProje64) | DevOps Engineer | #25, #29, #37 | #51, #52 | — |
 | Baki Can Erdoğan | [@bakicanerdogan](https://github.com/bakicanerdogan) | Implementation Engineer | #30, #31, #34 | #40, #47, #48, #50 | #39, #41, #45, #46 |
 
@@ -244,12 +244,12 @@ Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Cont
 - **Completed Work in Sprint 2:**
   - Authored the NFR catalogue (`docs/07-nfr-quality-measures.md` §1–§2, §4): fourteen NFRs across performance, security, usability, reliability, maintainability and accessibility. Each has a measurable validation target and a verification method.
   - Refined the product backlog (`docs/05-product-backlog.md`): re-validated estimates (26 SP), acceptance criteria extended with the SRS error flows, the Definition of Done, the Sprint 3 implementation order, and scope control.
-  - Contributed to and reviewed the SRS (#26); reviewed the verification-tooling section (#29).
+ - Contributed to and reviewed the SRS (#26); reviewed the verification-tooling section (#29), the user-flow diagrams (#31), and the submission report (#36).
   - Responsible for the final QA sweep and the Sprint 2 peer-review exercise (#35); contributor to and reviewer of the submission report (#36).
 - **GitHub Traceability Links:**
   - **Issues:** [Issue #27 – `[DOC-06]`](https://github.com/seng321CoHobby/Co-Hobby/issues/27), [Issue #28 – `[NFR-01]`](https://github.com/seng321CoHobby/Co-Hobby/issues/28), [Issue #35 – `[QA-01]`](https://github.com/seng321CoHobby/Co-Hobby/issues/35)
   - **Pull Requests:** [PR #43](https://github.com/seng321CoHobby/Co-Hobby/pull/43), [PR #44](https://github.com/seng321CoHobby/Co-Hobby/pull/44)
-  - **Reviewed PRs:** [PR #42](https://github.com/seng321CoHobby/Co-Hobby/pull/42), [PR #51](https://github.com/seng321CoHobby/Co-Hobby/pull/51)
+  - **Reviewed PRs:** [PR #42](https://github.com/seng321CoHobby/Co-Hobby/pull/42), [PR #50](https://github.com/seng321CoHobby/Co-Hobby/pull/50), [PR #51](https://github.com/seng321CoHobby/Co-Hobby/pull/51), [PR #53](https://github.com/seng321CoHobby/Co-Hobby/pull/53)
   - **Commits:** [Commits by `@yigitozkaya07`](https://github.com/seng321CoHobby/Co-Hobby/commits/develop?author=yigitozkaya07)
 
 

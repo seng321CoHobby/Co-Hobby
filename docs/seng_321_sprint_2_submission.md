@@ -238,24 +238,26 @@ The Sprint 1 policy ([`docs/04-git-flow-policy.md`](04-git-flow-policy.md)) was 
 
 ## 8 Sprint 2 Peer-Review Exercise
 
-*Placeholder: the answers come from the QA-01 sweep (#35, `@yigitozkaya07`) and are added before the release. The questions come from the assessment checklist (§6).*
-
-Another team should be able to answer these questions from the repository alone, without an oral explanation:
+Completed during the QA-01 sweep (#35, `@yigitozkaya07`). Another team can answer all six questions from the repository alone, without an oral explanation:
 
 1. **Which functional requirements does each user story produce, and where is each one traced?**
-   *Answer pending (#35).* Reference: SRS §3 and §8.
+   Every first-release user story maps directly to numbered functional requirements (`FR-1.1` through `FR-3.3`) in [`docs/06-srs.md`](06-srs.md) §3 and is traced end-to-end in the Requirements Traceability Matrix (§8): **US-01** → `FR-1.1`, `FR-1.2` (`UC-01`, `getTags`, `createProfile`); **US-02** → `FR-2.1` (`UC-02`, `createGroup`); **US-03** → `FR-2.2` (`UC-03`, `listAvailableGroups`); **US-04** → `FR-2.3` (`UC-04`, `addGroupMember`); **US-05** → `FR-3.1` (`UC-05`, `createProject`); **US-06** → `FR-3.2` (`UC-05`, `updateProjectProgress`); and **US-07** → `FR-3.3` (`UC-05`, `shareProject`, `getSharedProjectsFeed`). The same IDs are cross-referenced in [`docs/09-ui-ux.md`](09-ui-ux.md) §2.
 2. **How is each NFR measured, and which tool or test verifies it?**
-   *Answer pending (#35).* Reference: NFR §2–§4.
+   [`docs/07-nfr-quality-measures.md`](07-nfr-quality-measures.md) defines 14 measurable NFRs across performance, security, usability, reliability, maintainability, and accessibility (§2), explicitly marked as validation targets for Sprint 3–4 until implemented (§4). Table 3.1 maps every NFR ID to its concrete verification tool and CI/test location: **k6 / JMeter** load tests (`NFR-P-01`, 50 concurrent VUs, demo-day scenario in §3.3), **Lighthouse CI** & **axe-core** (`NFR-P-02`, `NFR-A-01`), **JUnit 5 + MockMvc + Testcontainers (PostgreSQL)** (`NFR-S-01`, `NFR-S-02`, `NFR-R-01`), **Schemathesis** & Bean Validation contract tests (`NFR-S-03`, `NFR-R-02`), **Redocly CLI** via `.github/workflows/validate-openapi.yml` (`NFR-M-01`, active now), **JaCoCo** (≥ 70% service-layer line coverage) + **Checkstyle / SpotBugs / ESLint** (`NFR-M-02`), **GitHub secret scanning** & deployment checklist (`NFR-S-04`), and moderated usability / keyboard-only checklists (`NFR-U-01`, `NFR-U-02`, `NFR-A-02`).
 3. **Can a reviewer follow a user journey from a Figma screen to the API operation it calls?**
-   *Answer pending (#35).* Reference: UI/UX §2–§3.
+   Yes. [`docs/09-ui-ux.md`](09-ui-ux.md) §2 maps all 8 high-fidelity screens (viewable in the public view-only Figma file and exported to `docs/figma/01-feed.png`–`08-create-group.png`) to their exact user story, use case, FR, and OpenAPI `operationId`s. Section §3 and the three exported user-flow diagrams (`user-flow-find-group.png`, `user-flow-create-group.png`, `user-flow-project-share.png`) trace every decision point and HTTP error branch (`400`, `401`, `403`, `404`, `409`), explicitly reflecting API contract constraints such as owner-only member assignment (`addGroupMember`, no self-join endpoint).
 4. **Which containers make up the system, and which external systems does the API depend on?**
-   *Answer pending (#35).* Reference: architecture §3.
+   The C4 Level 2 container diagram ([`docs/08-architecture.md`](08-architecture.md) §3.2, `c4-containers.png`) defines a three-container layered monolith: a **Web Frontend** (single-page web application), a **REST API** (Spring Boot implementing `api/openapi.yaml`), and a **Database** (PostgreSQL, accessed exclusively by the API). The C4 Level 1 context diagram (§3.1, `c4-context.png`) shows two external systems: an **External Identity Provider** for Bearer JWT authentication (replaced by a local JWT stub during development) and **External Media Hosts** for portfolio URLs (no raw media files are hosted).
 5. **What happens when an owner fills a full vacancy or skips a milestone stage?**
-   *Answer pending (#35).* Reference: sequence and state diagrams.
+   Both violations return **`HTTP 409 Conflict`** (`application/problem+json`) and persist no inconsistent state (`NFR-R-01`). In `addGroupMember`, assigning a user to an already-filled `skillRole` or adding a duplicate member returns `409` (`ROLE_SLOT_FULL`), documented in [`uml-seq-add-member.png`](diagrams/uml-seq-add-member.png) and SRS `UC-04`. In `updateProjectProgress`, skipping a stage or moving backward out of the strict sequence `PLANNING` → `WEEK_1` → `WEEK_2` → `COMPLETED` returns `409`, documented in [`uml-seq-progress.png`](diagrams/uml-seq-progress.png), [`uml-state.png`](diagrams/uml-state.png), and SRS `UC-05` (likewise, calling `shareProject` before `COMPLETED` returns `409`).
 6. **Which story does Sprint 3 start with, and when is a story "done"?**
-   *Answer pending (#35).* Reference: backlog, Sprint 3 order and Definition of Done.
+   [`docs/05-product-backlog.md`](05-product-backlog.md) orders Sprint 3 implementation strictly by dependency, starting with **US-01** (*View hobby tags and create a profile*, 3 SP, owner `@bakicanerdogan`) and progressing sequentially to **US-07**. Under the Sprint 3 Definition of Done, a story is "done" only when its implementation matches `api/openapi.yaml`, automated tests cover success and SRS error flows (`400`/`401`/`403`/`404`/`409`), JWT and `OWNER` rules are enforced, CI checks (OpenAPI lint, static analysis, and ≥ 70% service-layer coverage) pass, and the code is merged into `develop` via a peer-reviewed PR referencing its issue.
 
-**Internal review revisions:** *pending (#35); to list what changed after review.*
+**Internal review revisions:**
+- **API contract & sequence diagram alignment (PR #41, PR #48):** Clarified the `403` owner-only response on `updateProjectProgress` in `api/openapi.yaml` and updated the `uml-seq-progress` diagram note to match.
+- **NFR catalogue wording & contract alignment (PR #43):** Updated `NFR-M-01` to match the `api/openapi.yaml` path filter in `.github/workflows/validate-openapi.yml`, and clarified that `NFR-S-03`'s `http`/`https` restriction is an implementation-level validation rule on top of OpenAPI `format: uri`.
+- **NFR verification alignment (PR #51):** Aligned Section 3.3 `NFR-P-01` latency targets (`< 300 ms` read / `< 500 ms` write), added `NFR-S-04`, `NFR-R-02`, and `NFR-A-02` to Table 3.1, and harmonized JaCoCo coverage (`≥ 70%`) and SpotBugs with `#43`.
+- **Backlog & submission QA pass (PR #44, PR #53, QA-01 #35):** Extended backlog acceptance criteria with all SRS error flows, verified public repository and view-only Figma access from a logged-out browser, completed `docs/10-sprint-2-assessment-checklist.md`, and updated `CONTRIBUTIONS.md` review links.
 
 ## 9 Submission Traceability and GitHub Evidence
 
