@@ -116,8 +116,6 @@ The system is not implemented yet, so every number in the catalogue is a **valid
 - The demo-day load-test scenario: 50 concurrent virtual users with a read/write mix.
 - A PR quality-gate checklist for later sprints.
 
-*Note: final content of §3 is fixed when PR #51 is merged.*
-
 ## 4 UI/UX Prototypes and User Flows
 
 **Full document:** [`docs/09-ui-ux.md`](09-ui-ux.md)
@@ -154,7 +152,7 @@ The API contract forced some design decisions (UI/UX §2.2):
 | Flow 2 | Create a group and fill vacancies | US-02, US-04 | [`user-flow-create-group.png`](diagrams/user-flow-create-group.png) |
 | Flow 3 | Project milestones and sharing | US-05, US-06, US-07 | [`user-flow-project-share.png`](diagrams/user-flow-project-share.png) |
 
-Every flow marks its decision points and the error branches defined in the contract (`400`, `401`, `403`, `404`, `409`). *Note: the flow PNGs are added by PR #50.*
+Every flow marks its decision points and the error branches defined in the contract (`400`, `401`, `403`, `404`, `409`).
 
 ## 5 Software Architecture (C4 and UML)
 
@@ -277,12 +275,11 @@ Completed during the QA-01 sweep (#35, `@yigitozkaya07`). Another team can answe
 | UML use-case and state diagrams | [#33](https://github.com/seng321CoHobby/Co-Hobby/issues/33) | [#46](https://github.com/seng321CoHobby/Co-Hobby/pull/46) | `@Bruhun` | `@bakicanerdogan` | `uml-use-case.*`, `uml-state.*`, architecture §5.1, SRS §9 | D1.3, D4.7, D4.8 |
 | UML class and sequence diagrams | [#34](https://github.com/seng321CoHobby/Co-Hobby/issues/34) | [#40](https://github.com/seng321CoHobby/Co-Hobby/pull/40), [#41](https://github.com/seng321CoHobby/Co-Hobby/pull/41), [#48](https://github.com/seng321CoHobby/Co-Hobby/pull/48) | `@bakicanerdogan` (#40, #48), `@Bruhun` (#41, contract wording) | `@Bruhun`, `@bakicanerdogan` | `uml-class.*`, `uml-seq-*.*`, `api/openapi.yaml` | D4.5, D4.6 |
 | Repository cleanup and metadata | [#25](https://github.com/seng321CoHobby/Co-Hobby/issues/25) | [#52](https://github.com/seng321CoHobby/Co-Hobby/pull/52) | `@sengProje64` | `@Bruhun` | root files, `CONTRIBUTIONS.md` | P6, P7 |
-| Final QA sweep and peer review | [#35](https://github.com/seng321CoHobby/Co-Hobby/issues/35) | *pending* | `@yigitozkaya07` | `@xa1res` | checklist QA column, §8 of this report | S6, §5 |
-| Submission report and contributions | [#36](https://github.com/seng321CoHobby/Co-Hobby/issues/36) | [#53](https://github.com/seng321CoHobby/Co-Hobby/pull/53) | `@xa1res` | `@yigitozkaya07` | this file, `CONTRIBUTIONS.md` | S1, S2, S4, S5 |
-| Sprint 2 release | [#37](https://github.com/seng321CoHobby/Co-Hobby/issues/37) | [#54](https://github.com/seng321CoHobby/Co-Hobby/pull/54) | `@sengProje64` | `@xa1res` | `sprint-2` tag, GitHub Release | S3, S7, P8, P9 |
+| Final QA sweep and peer review | [#35](https://github.com/seng321CoHobby/Co-Hobby/issues/35) | [#57](https://github.com/seng321CoHobby/Co-Hobby/pull/57) | `@yigitozkaya07` | `@xa1res` | checklist QA column, §8 of this report | S6, §5 |
+| Submission report and contributions | [#36](https://github.com/seng321CoHobby/Co-Hobby/issues/36) | [#53](https://github.com/seng321CoHobby/Co-Hobby/pull/53), [#56](https://github.com/seng321CoHobby/Co-Hobby/pull/56) | `@xa1res` | `@yigitozkaya07` | this file, `CONTRIBUTIONS.md` | S1, S2, S4, S5 |
+| Sprint 2 release | [#37](https://github.com/seng321CoHobby/Co-Hobby/issues/37) | [#54](https://github.com/seng321CoHobby/Co-Hobby/pull/54) | `@sengProje64` | `@xa1res` | [`sprint-2` tag](https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2), GitHub Release | S3, S7, P8, P9 |
 | All Sprint 2 pull requests | Sprint 2 milestone | [Closed PRs](https://github.com/seng321CoHobby/Co-Hobby/pulls?q=is%3Apr+is%3Aclosed) | All members | — | — | P2 |
 | Commit history | — | [Commits on `develop`](https://github.com/seng321CoHobby/Co-Hobby/commits/develop) | All members | — | — | P1, P3 |
-| Sprint 2 release | `sprint-2` | [#54](https://github.com/seng321CoHobby/Co-Hobby/pull/54) | `@sengProje64` | `@xa1res` | <https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2> | S3 |
 
 ## References
 - Sprint 2 assignment text, SENG 321 Microsoft Teams ("Sprint 2 – Requirements & Architecture").

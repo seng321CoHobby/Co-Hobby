@@ -4,7 +4,7 @@
 - **Team Number:** 19
 - **GitHub Repository:** https://github.com/seng321CoHobby/Co-Hobby
 - **Sprint 1 Release Tag:** [`sprint-1`](https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-1)
-- **Sprint 2 Release Tag:** `sprint-2` (placeholder until #37)
+- **Sprint 2 Release Tag:** [`sprint-2`](https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2)
 
 Sprint 1 contributions are listed first. Sprint 2 contributions are in [Sprint 2 – Individual Contributions](#sprint-2--individual-contributions).
 
@@ -136,7 +136,7 @@ Sprint 1 contributions are listed first. Sprint 2 contributions are in [Sprint 2
 ## Sprint 2 – Individual Contributions
 
 - **Sprint:** 2 – Requirements & Architecture (milestone due 2026-11-24)
-- **Sprint 2 Release Tag:** `sprint-2` — *placeholder until OPS-04 (#37) publishes the release: <https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2>*
+- **Sprint 2 Release Tag:** [`sprint-2`](https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2) (published from `main` through release PR [#54](https://github.com/seng321CoHobby/Co-Hobby/pull/54), OPS-04 #37)
 - **Submission Report:** [`docs/seng_321_sprint_2_submission.md`](docs/seng_321_sprint_2_submission.md)
 
 Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Contributors. The table lists what each member authored and reviewed; the sections below link the evidence.
@@ -144,13 +144,13 @@ Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Cont
 | Name & Surname | GitHub Username | Project Role | Sprint 2 Issues (Responsible) | Authored PRs | Reviewed PRs |
 |---|---|---|---|---|---|
 | Yıldırım Beyazıt Köroğlu | [@beyazitKRGL](https://github.com/beyazitKRGL) | Product Owner | #26 | #42 | #44, #47 |
-| Mete Dugan | [@xa1res](https://github.com/xa1res) | Scrum Master | #24, #36 | #49, #53 | #35 and #37 PRs (pending) |
+| Mete Dugan | [@xa1res](https://github.com/xa1res) | Scrum Master | #24, #36 | #49, #53, #56 | #55, #57; #54 (pending) |
 | Enes Alp Erkmen | [@Bruhun](https://github.com/Bruhun) | Architect | #32, #33, #38 | #39, #41, #45, #46 | #40, #43, #44, #48, #49, #52 |
-| Hüseyin Yiğit Özkaya | [@yigitozkaya07](https://github.com/yigitozkaya07) | QA Engineer | #27, #28, #35 | #43, #44 | #42, #50, #51, #53 |
-| Abdullah Şar | [@sengProje64](https://github.com/sengProje64) | DevOps Engineer | #25, #29, #37 | #51, #52 | — |
+| Hüseyin Yiğit Özkaya | [@yigitozkaya07](https://github.com/yigitozkaya07) | QA Engineer | #27, #28, #35 | #43, #44, #57 | #42, #50, #51, #53, #56 |
+| Abdullah Şar | [@sengProje64](https://github.com/sengProje64) | DevOps Engineer | #25, #29, #37 | #51, #52, #54, #55 | — |
 | Baki Can Erdoğan | [@bakicanerdogan](https://github.com/bakicanerdogan) | Implementation Engineer | #30, #31, #34 | #40, #47, #48, #50 | #39, #41, #45, #46 |
 
-*PRs #50 and #51 are open at the time of writing; #35, #36 and #37 are completed in the last step of the sprint.*
+*The QA sweep (#35) and the release PR (#54, #37) are the last steps of the sprint; their reviews are added when they are merged.*
 
 
 ---
@@ -216,8 +216,8 @@ Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Cont
   - Reviewer of the final QA sweep (#35) and the Sprint 2 release (#37).
 - **GitHub Traceability Links:**
   - **Issues:** [Issue #24 – `[PROC-01]`](https://github.com/seng321CoHobby/Co-Hobby/issues/24), [Issue #36 – `[DOC-07]`](https://github.com/seng321CoHobby/Co-Hobby/issues/36)
-  - **Pull Requests:** [PR #49](https://github.com/seng321CoHobby/Co-Hobby/pull/49), [PR #53](https://github.com/seng321CoHobby/Co-Hobby/pull/53)
-  - **Reviewed PRs:** #35 QA-sweep PR and #37 release PR (pending)
+  - **Pull Requests:** [PR #49](https://github.com/seng321CoHobby/Co-Hobby/pull/49), [PR #53](https://github.com/seng321CoHobby/Co-Hobby/pull/53), [PR #56](https://github.com/seng321CoHobby/Co-Hobby/pull/56)
+  - **Reviewed PRs:** [PR #55](https://github.com/seng321CoHobby/Co-Hobby/pull/55), [PR #57](https://github.com/seng321CoHobby/Co-Hobby/pull/57); release PR [#54](https://github.com/seng321CoHobby/Co-Hobby/pull/54) (pending)
   - **Commits:** [Commits by `@xa1res`](https://github.com/seng321CoHobby/Co-Hobby/commits/develop?author=xa1res)
 
 
@@ -232,7 +232,7 @@ Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Cont
   - Responsible for the Sprint 2 release: the `develop` → `main` release PR, the `sprint-2` tag and the GitHub Release (#37).
 - **GitHub Traceability Links:**
   - **Issues:** [Issue #25 – `[OPS-03]`](https://github.com/seng321CoHobby/Co-Hobby/issues/25), [Issue #29 – `[NFR-02]`](https://github.com/seng321CoHobby/Co-Hobby/issues/29), [Issue #37 – `[OPS-04]`](https://github.com/seng321CoHobby/Co-Hobby/issues/37)
-  - **Pull Requests:** [PR #51](https://github.com/seng321CoHobby/Co-Hobby/pull/51), [PR #52](https://github.com/seng321CoHobby/Co-Hobby/pull/52)
+  - **Pull Requests:** [PR #51](https://github.com/seng321CoHobby/Co-Hobby/pull/51), [PR #52](https://github.com/seng321CoHobby/Co-Hobby/pull/52), [PR #54](https://github.com/seng321CoHobby/Co-Hobby/pull/54) (release), [PR #55](https://github.com/seng321CoHobby/Co-Hobby/pull/55)
   - **Commits:** [Commits by `@sengProje64`](https://github.com/seng321CoHobby/Co-Hobby/commits/develop?author=sengProje64)
 
 
@@ -244,12 +244,12 @@ Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Cont
 - **Completed Work in Sprint 2:**
   - Authored the NFR catalogue (`docs/07-nfr-quality-measures.md` §1–§2, §4): fourteen NFRs across performance, security, usability, reliability, maintainability and accessibility. Each has a measurable validation target and a verification method.
   - Refined the product backlog (`docs/05-product-backlog.md`): re-validated estimates (26 SP), acceptance criteria extended with the SRS error flows, the Definition of Done, the Sprint 3 implementation order, and scope control.
- - Contributed to and reviewed the SRS (#26); reviewed the verification-tooling section (#29), the user-flow diagrams (#31), and the submission report (#36).
+  - Contributed to and reviewed the SRS (#26); reviewed the verification-tooling section (#29), the user-flow diagrams (#31), and the submission report (#36).
   - Responsible for the final QA sweep and the Sprint 2 peer-review exercise (#35); contributor to and reviewer of the submission report (#36).
 - **GitHub Traceability Links:**
   - **Issues:** [Issue #27 – `[DOC-06]`](https://github.com/seng321CoHobby/Co-Hobby/issues/27), [Issue #28 – `[NFR-01]`](https://github.com/seng321CoHobby/Co-Hobby/issues/28), [Issue #35 – `[QA-01]`](https://github.com/seng321CoHobby/Co-Hobby/issues/35)
-  - **Pull Requests:** [PR #43](https://github.com/seng321CoHobby/Co-Hobby/pull/43), [PR #44](https://github.com/seng321CoHobby/Co-Hobby/pull/44)
-  - **Reviewed PRs:** [PR #42](https://github.com/seng321CoHobby/Co-Hobby/pull/42), [PR #50](https://github.com/seng321CoHobby/Co-Hobby/pull/50), [PR #51](https://github.com/seng321CoHobby/Co-Hobby/pull/51), [PR #53](https://github.com/seng321CoHobby/Co-Hobby/pull/53)
+  - **Pull Requests:** [PR #43](https://github.com/seng321CoHobby/Co-Hobby/pull/43), [PR #44](https://github.com/seng321CoHobby/Co-Hobby/pull/44), [PR #57](https://github.com/seng321CoHobby/Co-Hobby/pull/57)
+  - **Reviewed PRs:** [PR #42](https://github.com/seng321CoHobby/Co-Hobby/pull/42), [PR #50](https://github.com/seng321CoHobby/Co-Hobby/pull/50), [PR #51](https://github.com/seng321CoHobby/Co-Hobby/pull/51), [PR #53](https://github.com/seng321CoHobby/Co-Hobby/pull/53), [PR #56](https://github.com/seng321CoHobby/Co-Hobby/pull/56)
   - **Commits:** [Commits by `@yigitozkaya07`](https://github.com/seng321CoHobby/Co-Hobby/commits/develop?author=yigitozkaya07)
 
 
