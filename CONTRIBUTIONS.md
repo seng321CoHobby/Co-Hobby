@@ -126,3 +126,17 @@
   - **Pull Request:** [PR #14](https://github.com/seng321CoHobby/Co-Hobby/pull/14)
   - **Reviewed PRs:** [PR Reviews by `@yigitozkaya07`](https://github.com/seng321CoHobby/Co-Hobby/pulls?q=is%3Apr+reviewed-by%3Ayigitozkaya07) *(PRs #7, #9)*
   - **Commits:** [Commits by `@yigitozkaya07`](https://github.com/seng321CoHobby/Co-Hobby/commits/develop?author=yigitozkaya07)
+
+---
+
+
+## Note on Commit Author Identities
+
+The commit history of `develop` contains two commits that GitHub attributes to the external account [`@xekone1`](https://github.com/xekone1) instead of a team member's account:
+
+| Commit | Author recorded in Git | Message |
+|---|---|---|
+| [`bfe7a31`](https://github.com/seng321CoHobby/Co-Hobby/commit/bfe7a31) | `Baki Can <bakican30@outlook.com.tr>` | `docs: add system vision and boundary (Refs #2)` |
+| [`64838a6`](https://github.com/seng321CoHobby/Co-Hobby/commit/64838a6) | `Baki Can <bakican30@outlook.com.tr>` | `docs: add system vision and boundary (Refs #2)` |
+
+**Clarification:** both commits were authored by **Baki Can Erdoğan** (`@bakicanerdogan`) from a secondary e-mail address (`bakican30@outlook.com.tr`) that is linked to the GitHub account `@xekone1`. They belong to Baki Can Erdoğan's `DOC-02` work (Issue #2, PRs #8, #13 and #16) and are not contributions from anyone outside Team 19. All later commits by this member use the `@bakicanerdogan` account.
