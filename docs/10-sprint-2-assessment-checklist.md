@@ -7,9 +7,9 @@
 **Status:** Ready for review — authored by @xa1res (Issue #24, PROC-01); reviewer @Bruhun; used by @yigitozkaya07 in the QA-01 sweep (Issue #35)
 
 > The Sprint 2 assignment asks us to comply with the "official BM321 Software Engineering
-> Semester Team Project Specification and Assessment Rubric". That rubric has not been shared
-> with the team, so this checklist is our own version of it, built from the sources in §1.
-> If the lecturer or TA shares the official rubric, add its items to this file before the release.
+> Semester Team Project Specification and Assessment Rubric". No official rubric has been
+> shared with the team, so this checklist is our own version of it, built from the sources in §1,
+> and it is the reference for the QA-01 sweep (#35) and the release (#37).
 
 ## 1. Sources
 
@@ -20,7 +20,7 @@
 | SRC-3 | Lecturer's "Sprint 1 Examples" pack (Teams Files), as applied in [`seng_321_sprint_1_submission.md`](seng_321_sprint_1_submission.md) | §6 report structure and peer-review exercise style |
 | SRC-4 | Team agreements: [`04-git-flow-policy.md`](04-git-flow-policy.md) and the Sprint 2 issues #24–#38 | §4 process rules, §7 contribution balance |
 
-**Official rubric request:** to be sent to the lecturer or TA by @xa1res. Until it arrives, this checklist applies.
+**Official rubric:** not available; only the assignment texts and the Sprint 1 examples were shared. This checklist applies instead.
 
 ## 2. Required Deliverables (SRC-1)
 
