@@ -60,6 +60,6 @@ sequenceDiagram
 | 404 | Project not found | `'404'` |
 | 409 | Stage skipped or moved backward | `'409'` |
 
-Note: `api/openapi.yaml` describes the 403 for this operation only as "Subject lacks permission".
-This diagram assumes the owner-only rule used by US-06 ("As a Project Owner, I can advance
-stages") and by the other owner-only endpoints (`addGroupMember`, `createProject`, `shareProject`).
+Note: the 403 follows the owner-only rule in `api/openapi.yaml` ("Only the Project Owner can advance
+the project progress stage"), the same rule as US-06 and the other owner-only endpoints
+(`addGroupMember`, `createProject`, `shareProject`).
