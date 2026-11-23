@@ -144,7 +144,7 @@ Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Cont
 | Name & Surname | GitHub Username | Project Role | Sprint 2 Issues (Responsible) | Authored PRs | Reviewed PRs |
 |---|---|---|---|---|---|
 | Yıldırım Beyazıt Köroğlu | [@beyazitKRGL](https://github.com/beyazitKRGL) | Product Owner | #26 | #42 | #44, #47 |
-| Mete Dugan | [@xa1res](https://github.com/xa1res) | Scrum Master | #24, #36 | #49, #36 PR | #35 and #37 PRs (pending) |
+| Mete Dugan | [@xa1res](https://github.com/xa1res) | Scrum Master | #24, #36 | #49, #53 | #35 and #37 PRs (pending) |
 | Enes Alp Erkmen | [@Bruhun](https://github.com/Bruhun) | Architect | #32, #33, #38 | #39, #41, #45, #46 | #40, #43, #44, #48, #49, #52 |
 | Hüseyin Yiğit Özkaya | [@yigitozkaya07](https://github.com/yigitozkaya07) | QA Engineer | #27, #28, #35 | #43, #44 | #42, #51 |
 | Abdullah Şar | [@sengProje64](https://github.com/sengProje64) | DevOps Engineer | #25, #29, #37 | #51, #52 | — |
@@ -216,7 +216,7 @@ Each Sprint 2 issue names one Responsible author and one Reviewer, plus any Cont
   - Reviewer of the final QA sweep (#35) and the Sprint 2 release (#37).
 - **GitHub Traceability Links:**
   - **Issues:** [Issue #24 – `[PROC-01]`](https://github.com/seng321CoHobby/Co-Hobby/issues/24), [Issue #36 – `[DOC-07]`](https://github.com/seng321CoHobby/Co-Hobby/issues/36)
-  - **Pull Requests:** [PR #49](https://github.com/seng321CoHobby/Co-Hobby/pull/49), #36 submission-report PR
+  - **Pull Requests:** [PR #49](https://github.com/seng321CoHobby/Co-Hobby/pull/49), [PR #53](https://github.com/seng321CoHobby/Co-Hobby/pull/53)
   - **Reviewed PRs:** #35 QA-sweep PR and #37 release PR (pending)
   - **Commits:** [Commits by `@xa1res`](https://github.com/seng321CoHobby/Co-Hobby/commits/develop?author=xa1res)
 
