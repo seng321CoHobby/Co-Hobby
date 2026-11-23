@@ -4,7 +4,7 @@
 **Team:** 19
 **Project:** Co-Hobby
 **Sprint:** 2
-**Status:** NFR Catalogue authored by @yigitozkaya07 (Issue #28); verification-tooling section pending @sengProje64 (Issue #29)
+**Status:** NFR Catalogue authored by @yigitozkaya07 (Issue #28); verification-tooling section (Section 3) authored by @sengProje64 (Issue #29)
 
 > Define quality in terms of *measurable criteria and verification methods*, not claims.
 > The system is not yet implemented: numeric values are **validation targets** for later
@@ -79,16 +79,19 @@ linked here (rule 3 in Section 4).
 | NFR | Verification tool | Where it runs | Evidence produced | Becomes active |
 |---|---|---|---|---|
 | NFR-P-01 | **k6** load script (`perf/api-load.js`) against the deployed API; JMeter accepted as an alternative | Manual workflow (`workflow_dispatch`) + demo-day load test (3.3) | k6 summary (p95 latency, error rate) uploaded as a workflow artifact | Sprint 4 |
-| NFR-P-02 | **Lighthouse CI** (`@lhci/cli`) performance category on the feed page | `frontend.yml` on PRs touching the frontend | Lighthouse report (performance score, LCP, TBT) as artifact | Sprint 4 |
+| NFR-P-02 | **Lighthouse CI** (`@lhci/cli`) performance category on the feed page | `frontend.yml` on PRs touching the frontend | Lighthouse report (LCP, INP/TBT, performance score) as artifact | Sprint 4 |
 | NFR-S-01 | **JUnit 5 + Spring Boot Test (MockMvc)** integration tests: every write endpoint called without/with an invalid JWT must return 401 | `ci.yml` → `mvn verify` | Surefire/Failsafe test report | Sprint 3 |
 | NFR-S-02 | JUnit 5 + MockMvc: every OWNER-only operation called by a non-owner must return 403 | `ci.yml` → `mvn verify` | Test report | Sprint 3 |
 | NFR-S-03 | Contract tests on the `mediaUrls` schema (invalid URI → 400) plus **Schemathesis** run against the running API | `ci.yml` → `contract` job | Schemathesis report, test report | Sprint 3 |
+| NFR-S-04 | **GitHub secret scanning** (with push protection) on the repository; schema review of `api/openapi.yaml` and database entities for payment/medical fields; deployment checklist confirming HTTPS (TLS 1.2+) | Repository settings (continuous) + PR review + manual pre-deployment check | Secret-scanning alert list (0 open alerts), completed schema-review and deployment checklists | Sprint 3 / 4 |
 | NFR-U-01 | Moderated usability test (prototype in Sprint 3, web app in Sprint 4) with a recorded task-time sheet | Manual, organized by QA | Task time and success-rate table linked from this document | Sprint 3 / 4 |
 | NFR-U-02 | Usability test scenario "find a group that needs my role" | Manual, organized by QA | Success-rate table | Sprint 4 |
 | NFR-R-01 | JUnit 5 + **Testcontainers (PostgreSQL)** integration tests for every 409 path (duplicate member, filled vacancy, skipped stage, share before `COMPLETED`), including a concurrent-request test for the same vacancy | `ci.yml` → `mvn verify` | Test report | Sprint 3 |
+| NFR-R-02 | JUnit 5 + MockMvc contract assertions that every 400/409 response matches the `Problem` schema (`application/problem+json`) and unknown UUIDs return 404; all CI tests run against the local JWT stub | `ci.yml` → `mvn verify` and `contract` job | Test report, Schemathesis report | Sprint 3 |
 | NFR-M-01 | **Redocly CLI** lint of `api/openapi.yaml` (existing `validate-openapi.yml`) | Every PR touching `api/openapi.yaml` | Workflow check status | Active now |
-| NFR-M-02 | **JaCoCo** coverage report with a minimum-coverage rule; **Checkstyle** (Google style) for the backend; ESLint for the frontend | `ci.yml` / `frontend.yml` | JaCoCo HTML/XML report, lint output | Sprint 3 |
-| NFR-A-01 | **Lighthouse CI** accessibility category + **axe-core** (`@axe-core/cli`) on the main screens, plus a manual keyboard-navigation checklist | `frontend.yml` + manual QA pass | Lighthouse/axe reports, completed checklist | Sprint 4 |
+| NFR-M-02 | **JaCoCo** coverage report with a minimum-coverage rule; **Checkstyle** (Google style) and **SpotBugs** for the backend; ESLint for the frontend; GitHub branch rulesets for issue reference and approval | `ci.yml` / `frontend.yml` | JaCoCo HTML/XML report, lint output | Sprint 3 |
+| NFR-A-01 | **Lighthouse CI** accessibility category + **axe-core** (`@axe-core/cli`) on the main screens | `frontend.yml` + manual contrast review | Lighthouse/axe reports | Sprint 4 |
+| NFR-A-02 | Manual keyboard-only navigation checklist (`Tab`, `Shift+Tab`, `Enter`, `Space`, visible focus) across the `US-01`–`US-07` screens | Manual QA pass before each release | Completed checklist linked here | Sprint 4 |
 
 ### 3.2 Planned CI Changes for Sprint 3
 
@@ -99,8 +102,8 @@ All of them run on `pull_request` targeting `develop` and `main`, and on `push` 
    (`@redocly/cli@<pinned>`) so lint results do not change between runs.
 2. **`ci.yml` (new) — backend build and test**
    - `build-test` job: `actions/checkout@v4` → `actions/setup-java@v4` (Temurin 21, Maven cache) → `mvn -B verify`.
-   - `mvn verify` runs unit tests (Surefire), integration tests with Testcontainers PostgreSQL (Failsafe), Checkstyle, and the JaCoCo `check` goal.
-   - Coverage threshold (validation target): **≥ 70% line coverage** on the service layer in Sprint 3, raised to **≥ 80%** in Sprint 4. The build fails below the threshold.
+   - `mvn verify` runs unit tests (Surefire), integration tests with Testcontainers PostgreSQL (Failsafe), Checkstyle, SpotBugs, and the JaCoCo `check` goal.
+   - Coverage threshold (validation target, from NFR-M-02): **≥ 70% line coverage** on the core backend domain and service classes. The build fails below the threshold.
    - Upload the JaCoCo and test reports with `actions/upload-artifact@v4`.
 3. **`ci.yml` → `contract` job (new)** — depends on `build-test`; starts the API with the local JWT stub, then runs Schemathesis against `api/openapi.yaml` to check that responses match the documented schemas and status codes (400, 401, 403, 404, 409).
 4. **`frontend.yml` (new, once the framework is chosen)** — install, ESLint, unit tests, production build, then Lighthouse CI (performance and accessibility) and axe-core against the built app.
@@ -114,7 +117,7 @@ The demo day is used as the scalability verification event for NFR-P-01, at clas
 
 - **Load profile (validation target):** ramp to **50 concurrent virtual users** over 1 minute, hold for 5 minutes, ramp down over 1 minute. 50 VUs covers a full class session using the system at the same time.
 - **User mix per virtual user:** 60% browse the public feed and search groups (read), 25% view a group detail page (read), 15% write operations with a test JWT (create profile, join or assign a role, advance a milestone).
-- **Pass criteria (validation targets):** p95 latency **< 500 ms** for read endpoints and **< 1 s** for write endpoints; error rate **< 1%** (expected 4xx answers from the scenario are not counted as errors); no inconsistent state afterwards (checked with the NFR-R-01 queries).
+- **Pass criteria (validation targets, from NFR-P-01):** p95 response time **< 300 ms** for public read endpoints (`GET /tags`, `GET /groups`, `GET /feed/projects`) and **< 500 ms** for authenticated write endpoints (`POST`/`PATCH`); HTTP 5xx error rate **< 1%** (expected 4xx answers from the scenario are not errors); no inconsistent state afterwards (checked with the NFR-R-01 queries).
 - **Procedure:** run the scenario once against the staging deployment the day before (dry run), then during the demo with the class as real users while k6 adds background load. Both k6 summaries are linked in this section.
 - **Test data:** a seeded dataset of tags, profiles, and groups; test accounts come from the local JWT stub or a test tenant of the identity provider, never real user accounts.
 
