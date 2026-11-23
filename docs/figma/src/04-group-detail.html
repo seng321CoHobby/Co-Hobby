@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>04 Group Detail</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .idbox { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1px dashed var(--line-strong); border-radius: 2px; padding: 6px 10px; }
+</style>
+</head>
+<body>
+<div class="window">
+  <header class="topbar">
+    <div class="logo"><span class="mark">Co</span>Co-Hobby</div>
+    <nav class="tabs"><a>Feed</a><a class="on">Find groups</a><a>Create group</a><a>My project</a></nav>
+    <div class="user"><span class="avatar">DY</span>Deniz Yılmaz</div>
+  </header>
+
+  <main class="page">
+    <div class="crumb">Find groups / Music, Drummer / Ankara Indie Collective</div>
+    <div class="head"><div><div class="row" style="gap:12px"><h1>Ankara Indie Collective</h1><span class="tag">Music</span></div><p class="lead">Indie rock band recording a first EP. Rehearsals twice a week in Çankaya.</p></div></div>
+
+    <div class="two">
+      <section>
+        <div class="spread" style="margin-bottom:10px"><h2>Roles</h2><span class="small">2 of 3 roles open</span></div>
+        <table class="tbl">
+          <tr><th style="width:30%">Role</th><th style="width:28%">Status</th><th>Member</th></tr>
+          <tr><td><b>Guitarist</b><div class="small">Creator's role</div></td><td><span class="status filled">Filled</span></td><td><span class="tag plain">OWNER</span><div class="mono" style="color:var(--ink-2);margin-top:4px">user 3f2a8c1e…</div></td></tr>
+          <tr><td><b>Drummer</b><div class="small">Needed role</div></td><td><span class="status open">Open</span></td><td class="small">No member yet</td></tr>
+          <tr><td><b>Vocalist</b><div class="small">Needed role</div></td><td><span class="status open">Open</span></td><td class="small">No member yet</td></tr>
+        </table>
+      </section>
+
+      <aside class="stack">
+        <section>
+          <div class="caption">Hobbyist view</div>
+          <div class="panel">
+            <h3>Want the Drummer or Vocalist role?</h3>
+            <p class="small" style="margin:6px 0 12px">The group owner adds members to open roles. Send the owner your Co-Hobby user ID so they can add you.</p>
+            <div class="idbox"><span class="mono">7c9e6679-7425-40de-…</span><span class="btn link">Copy my ID</span></div>
+            <div class="hint">No profile yet? <span style="color:var(--blue-dark);font-weight:600">Create one first</span>. Owners check your skill role.</div>
+          </div>
+        </section>
+        <section>
+          <div class="caption">Owner view, only the group's OWNER sees these actions</div>
+          <div class="panel stack">
+            <h3>Manage this group</h3>
+            <span class="btn primary block">Assign a member to an open role</span>
+            <span class="btn block">Start the group project</span>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<aside class="notes">
+  <h4>Prototype notes — Screen 04 · US-03 / UC-03 (owner actions lead to US-04, US-05)</h4>
+  <ul>
+    <li>Data: the selected <code>GroupListingResponse</code> from <code>GET /groups</code>; the API has no single-group endpoint.</li>
+    <li>Roles = <code>creatorSkillRole</code> (filled by the OWNER) + <code>neededRoles</code>; a needed role is filled when a member's <code>skillRole</code> matches it.</li>
+    <li>Members show <code>memberRole</code> and <code>skillRole</code>; <code>GroupMember</code> carries only <code>userId</code>, so no names are shown.</li>
+    <li>There is no self-join or apply operation in the first release; the hobbyist shares their <code>userId</code> with the owner outside the platform.</li>
+    <li>"Assign a member" → Screen 05. "Start the group project" → Screen 06.</li>
+    <li>Owner-only buttons are hidden for other users; the API still enforces <code>403</code>.</li>
+  </ul>
+</aside>
+</body>
+</html>

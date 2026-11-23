@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>02 Profile Creation</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .urlrow { display: flex; gap: 8px; margin-bottom: 8px; }
+  .urlrow .input { flex: 1; }
+  .rm { width: 36px; height: 36px; border: 1px solid var(--line-strong); border-radius: 2px; display: grid; place-items: center; color: var(--ink-2); }
+  .idbox { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1px dashed var(--line-strong); border-radius: 2px; padding: 6px 10px; margin-top: 8px; }
+  .who { display: flex; gap: 12px; align-items: center; }
+  .who .avatar { width: 44px; height: 44px; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="window">
+  <header class="topbar">
+    <div class="logo"><span class="mark">Co</span>Co-Hobby</div>
+    <nav class="tabs"><a>Feed</a><a>Find groups</a><a>Create group</a><a>My project</a></nav>
+    <div class="user"><span class="avatar">DY</span>Deniz Yılmaz</div>
+  </header>
+
+  <main class="page">
+    <div class="head"><div><h1>Create your hobbyist profile</h1><p class="lead">Group owners look at your category, skill role and media links when they fill open roles.</p></div></div>
+
+    <div class="two">
+      <section>
+        <div class="alert err" style="margin-bottom:16px"><b>Invalid Request</b>One media link is not a valid URL. Fix the highlighted field and try again.<div class="code">400 · INVALID_INPUT</div></div>
+
+        <div class="field"><label>Display name <span class="req">*</span></label><div class="input">Deniz Yılmaz</div></div>
+        <div class="pair field">
+          <div><label class="lbl">Primary category <span class="req">*</span></label><div class="select">Music</div><div class="hint">Loaded from <span class="mono">GET /tags</span></div></div>
+          <div><label class="lbl">Skill role <span class="req">*</span></label><div class="select">Drummer</div><div class="hint">Roles of the selected category</div></div>
+        </div>
+        <div class="field"><label>Bio <span class="opt">optional</span></label><div class="textarea">Drummer in Ankara, looking for a band to play with.</div></div>
+        <div class="field">
+          <label>Media links <span class="opt">optional, links to your work on external sites</span></label>
+          <div class="urlrow"><div class="input">https://example.com/drum-demo.mp4</div><span class="rm">✕</span></div>
+          <div class="urlrow" style="margin-bottom:0"><div class="input error">youtube deniz kayit</div><span class="rm">✕</span></div>
+          <div class="field-error">Enter a full URL starting with https://</div>
+          <div style="margin-top:8px"><span class="btn link">+ Add another link</span></div>
+        </div>
+        <div class="actions"><span class="hint" style="margin:0 auto 0 0"><span class="req">*</span> Required</span><span class="btn">Cancel</span><span class="btn primary">Create profile</span></div>
+      </section>
+
+      <aside class="stack">
+        <section>
+          <div class="caption">Preview</div>
+          <div class="panel">
+            <div class="who"><span class="avatar">DY</span><div><b>Deniz Yılmaz</b><div class="row" style="margin-top:3px"><span class="tag">Music</span><span class="tag plain">Drummer</span></div></div></div>
+            <p style="margin:12px 0 4px">Drummer in Ankara, looking for a band to play with.</p>
+            <div style="color:var(--blue-dark)">https://example.com/drum-demo.mp4</div>
+          </div>
+        </section>
+        <section>
+          <div class="caption">After submit, 201</div>
+          <div class="alert ok"><b>Profile created</b>Share your user ID with a group owner so they can add you to an open role.</div>
+          <div class="idbox"><span class="mono">7c9e6679-7425-40de-944b-e07fc1f90ae7</span><span class="btn link">Copy</span></div>
+        </section>
+        <section>
+          <div class="caption">Not signed in, 401</div>
+          <div class="alert info"><b>Sign in required</b>Shown instead of the form when the token is missing or expired.</div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<aside class="notes">
+  <h4>Prototype notes — Screen 02 · US-01 / UC-01</h4>
+  <ul>
+    <li>Categories and roles: <code>GET /tags</code> → <code>TagCategory[]</code> (<code>category</code>, <code>roles</code>). Public.</li>
+    <li>Submit: <code>POST /profiles</code> with <code>NewProfile</code>: <code>displayName</code>*, <code>primaryCategory</code>*, <code>skillRole</code>*, <code>bio</code>, <code>mediaUrls</code> (URI list).</li>
+    <li><code>400</code> → message built from the <code>Problem</code> body (<code>title</code>, <code>detail</code>, <code>code</code>) and the invalid field highlighted.</li>
+    <li><code>401</code> → sign-in notice; sign-in happens at the external identity provider.</li>
+    <li><code>201</code> → <code>ProfileResponse</code>; the returned <code>userId</code> is what an owner enters on Screen 05.</li>
+    <li>Media files are never uploaded here; only links to external hosts are stored. Names are sample data.</li>
+  </ul>
+</aside>
+</body>
+</html>

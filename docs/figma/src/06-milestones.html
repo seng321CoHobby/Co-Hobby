@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>06 Project Milestone Board</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .ruler { display: grid; grid-template-columns: repeat(4, 1fr); margin: 4px 0 4px; }
+  .mk { position: relative; padding-top: 34px; }
+  .mk::before { content: ""; position: absolute; top: 9px; left: 0; right: 0; height: 2px; background: var(--line-strong); }
+  .mk.done::before { background: var(--blue); }
+  .mk.cur::before { background: linear-gradient(90deg, var(--blue) 12px, var(--line-strong) 12px); }
+  .mk i { position: absolute; top: 0; left: 0; width: 20px; height: 20px; border-radius: 2px; background: #fff; border: 2px solid var(--line-strong); }
+  .mk.done i { background: var(--blue); border-color: var(--blue); }
+  .mk.cur i { border-color: var(--blue); box-shadow: inset 0 0 0 4px var(--blue); }
+  .mk.nxt i { border-color: var(--ochre); }
+  .mk b { display: block; font-size: 14px; }
+  .mk .t { font-size: 12px; color: var(--ink-2); }
+  .mk.nxt .t { color: var(--ochre-text); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="window">
+  <header class="topbar">
+    <div class="logo"><span class="mark">Co</span>Co-Hobby</div>
+    <nav class="tabs"><a>Feed</a><a>Find groups</a><a>Create group</a><a class="on">My project</a></nav>
+    <div class="user"><span class="avatar">AD</span>Ahmet Demir · owner</div>
+  </header>
+
+  <main class="page">
+    <div class="crumb">Ankara Indie Collective / Project</div>
+    <div class="head"><div><div class="row" style="gap:12px"><h1>First EP Recording</h1><span class="tag">WEEK_1</span></div><p class="lead">Four-track indie EP recorded over two weeks.</p></div><span class="btn">Share project</span></div>
+
+    <div class="two">
+      <section>
+        <div class="panel white">
+          <h2 style="margin-bottom:14px">Milestones</h2>
+          <div class="ruler">
+            <div class="mk done"><i></i><b>PLANNING</b><span class="t">Done</span></div>
+            <div class="mk cur"><i></i><b>WEEK_1</b><span class="t">Current stage</span></div>
+            <div class="mk nxt"><i></i><b>WEEK_2</b><span class="t">Next</span></div>
+            <div class="mk"><i></i><b>COMPLETED</b><span class="t">Unlocks sharing</span></div>
+          </div>
+          <div class="actions" style="margin-top:22px"><span class="small" style="margin-right:auto">Stages move forward one step at a time. Skipping or going back is not allowed.</span><span class="btn primary">Advance to WEEK_2</span></div>
+        </div>
+
+        <div class="caption" style="margin-top:24px">Stage conflict, 409</div>
+        <div class="alert err"><b>Stage skipped or moved backward</b>This project is no longer in WEEK_1. The board reloads the current stage; advance from there.<div class="code">409 · problem+json</div></div>
+      </section>
+
+      <aside class="stack">
+        <section>
+          <div class="caption">Empty state, no project yet</div>
+          <div class="panel stack">
+            <h3>Start the group project</h3>
+            <div><label class="lbl">Title <span class="req">*</span></label><div class="input">First EP Recording</div></div>
+            <div><label class="lbl">Description <span class="opt">optional</span></label><div class="textarea">Four-track indie EP recorded over two weeks.</div></div>
+            <span class="btn primary block">Create project in PLANNING</span>
+          </div>
+        </section>
+        <section>
+          <div class="caption">Other errors</div>
+          <div class="stack">
+            <div class="alert warn"><b>Only the Project Owner can create or advance the project</b><div class="code">403</div></div>
+            <div class="alert err"><b>Project not found</b>It may have been removed.<div class="code">404</div></div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<aside class="notes">
+  <h4>Prototype notes — Screen 06 · US-05, US-06 / UC-05</h4>
+  <ul>
+    <li>Create: <code>POST /projects</code> (<code>createProject</code>) with <code>groupId</code>*, <code>title</code>*, <code>description</code> → <code>201</code>, <code>progressStage</code> PLANNING, <code>isShared</code> false.</li>
+    <li>Advance: <code>PATCH /projects/{projectId}/progress</code> with the next <code>progressStage</code> only. The UI offers just the next stage.</li>
+    <li><code>409</code> on skipped or backward stage (for example a stale tab) → message and reload.</li>
+    <li><code>403</code> non-owner, <code>404</code> unknown group/project, <code>400</code> missing title or unknown stage, <code>401</code> sign-in notice.</li>
+    <li>"Share project" opens Screen 07; it can succeed only in COMPLETED.</li>
+    <li>Stage order: PLANNING → WEEK_1 → WEEK_2 → COMPLETED (terminal).</li>
+  </ul>
+</aside>
+</body>
+</html>

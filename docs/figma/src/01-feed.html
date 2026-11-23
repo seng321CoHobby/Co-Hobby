@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>01 Landing and Public Feed</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0 36px; }
+  .how .panel { display: flex; gap: 12px; align-items: flex-start; }
+  .num { width: 26px; height: 26px; border-radius: 2px; background: var(--blue-soft); color: var(--blue-dark); display: grid; place-items: center; font-weight: 700; flex: none; }
+</style>
+</head>
+<body>
+<div class="window">
+  <header class="topbar">
+    <div class="logo"><span class="mark">Co</span>Co-Hobby</div>
+    <nav class="tabs"><a class="on">Feed</a><a>Find groups</a><a>Create group</a><a>My project</a></nav>
+    <div class="user"><span class="btn sm">Sign in</span></div>
+  </header>
+
+  <main class="page">
+    <h1>Find a group for your hobby</h1>
+    <p class="lead">Search groups by hobby category and the skill role they still need. The group owner adds you to an open role, and the group tracks its project week by week.</p>
+    <div class="row" style="margin-top:18px"><span class="btn primary">Find groups</span><span class="btn">Create my profile</span></div>
+
+    <section class="how">
+      <div class="panel"><span class="num">1</span><div><b>Create a profile</b><div class="small">Pick your category and skill role.</div></div></div>
+      <div class="panel"><span class="num">2</span><div><b>Find a group</b><div class="small">Filter by category and open role.</div></div></div>
+      <div class="panel"><span class="num">3</span><div><b>Track milestones</b><div class="small">PLANNING, WEEK_1, WEEK_2, COMPLETED.</div></div></div>
+    </section>
+
+    <div style="margin-bottom:10px"><h2>Shared projects</h2><div class="small">Completed projects that groups chose to share. No sign-in needed.</div></div>
+    <table class="tbl">
+      <tr><th style="width:26%">Project</th><th>Description</th><th style="width:130px">Stage</th></tr>
+      <tr><td><b>First EP Recording</b></td><td>Four-track indie EP recorded over two weeks.</td><td><span class="status done">COMPLETED</span></td></tr>
+      <tr><td><b>Son Vapur</b></td><td>10-minute short film shot over two weekends in Istanbul.</td><td><span class="status done">COMPLETED</span></td></tr>
+      <tr><td><b>Kadıköy Demo Tape</b></td><td>Three-song demo recorded in a rehearsal room.</td><td><span class="status done">COMPLETED</span></td></tr>
+    </table>
+
+    <div class="caption" style="margin-top:28px">Empty state, 200 with an empty array</div>
+    <div class="empty"><h3>No shared projects yet</h3><div class="small" style="margin-top:4px">Completed projects appear here once their owners share them.</div></div>
+  </main>
+</div>
+
+<aside class="notes">
+  <h4>Prototype notes — Screen 01 · US-07 / UC-05</h4>
+  <ul>
+    <li>Data: <code>GET /feed/projects</code> (<code>getSharedProjectsFeed</code>), public, no token.</li>
+    <li>Each row shows <code>ProjectResponse</code> fields only: <code>title</code>, <code>description</code>, <code>progressStage</code> (always COMPLETED), <code>isShared</code>.</li>
+    <li>Empty array → empty state shown above. <code>400</code> → generic error message.</li>
+    <li>Projects carry no media field, so feed rows are text-only; portfolio media lives on profiles as external URLs.</li>
+    <li>"Find groups" → Screen 03. "Create my profile" → Screen 02 (requires sign-in via the external identity provider).</li>
+    <li>Names and places are sample data.</li>
+  </ul>
+</aside>
+</body>
+</html>
