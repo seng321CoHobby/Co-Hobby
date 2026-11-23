@@ -4,7 +4,7 @@
 - **Project Name:** Co-Hobby
 - **Team Number:** 19
 - **GitHub Repository URL:** <https://github.com/seng321CoHobby/Co-Hobby>
-- **Sprint 2 Release Tag:** `sprint-2` — *placeholder: set by OPS-04 (#37) once the release is published; expected URL <https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2>*
+- **Sprint 2 Release Tag:** [`sprint-2`](https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2) (published from `main` by OPS-04, #37, via release PR [#54](https://github.com/seng321CoHobby/Co-Hobby/pull/54))
 - **Figma Project (public, view-only):** <https://www.figma.com/design/SqIaYZLZ0fSslWjnXHuRf8/Co-Hobby-Sprint-2-UI-UX>
 - **OpenAPI Specification File:** [`api/openapi.yaml`](../api/openapi.yaml)
 - **Assessment Checklist:** [`docs/10-sprint-2-assessment-checklist.md`](10-sprint-2-assessment-checklist.md). No official rubric was shared, so this checklist is the team's reference for Sprint 2.
@@ -277,10 +277,10 @@ Another team should be able to answer these questions from the repository alone,
 | Repository cleanup and metadata | [#25](https://github.com/seng321CoHobby/Co-Hobby/issues/25) | [#52](https://github.com/seng321CoHobby/Co-Hobby/pull/52) | `@sengProje64` | `@Bruhun` | root files, `CONTRIBUTIONS.md` | P6, P7 |
 | Final QA sweep and peer review | [#35](https://github.com/seng321CoHobby/Co-Hobby/issues/35) | *pending* | `@yigitozkaya07` | `@xa1res` | checklist QA column, §8 of this report | S6, §5 |
 | Submission report and contributions | [#36](https://github.com/seng321CoHobby/Co-Hobby/issues/36) | [#53](https://github.com/seng321CoHobby/Co-Hobby/pull/53) | `@xa1res` | `@yigitozkaya07` | this file, `CONTRIBUTIONS.md` | S1, S2, S4, S5 |
-| Sprint 2 release | [#37](https://github.com/seng321CoHobby/Co-Hobby/issues/37) | *pending* | `@sengProje64` | `@xa1res` | `sprint-2` tag, GitHub Release | S3, S7, P8, P9 |
+| Sprint 2 release | [#37](https://github.com/seng321CoHobby/Co-Hobby/issues/37) | [#54](https://github.com/seng321CoHobby/Co-Hobby/pull/54) | `@sengProje64` | `@xa1res` | `sprint-2` tag, GitHub Release | S3, S7, P8, P9 |
 | All Sprint 2 pull requests | Sprint 2 milestone | [Closed PRs](https://github.com/seng321CoHobby/Co-Hobby/pulls?q=is%3Apr+is%3Aclosed) | All members | — | — | P2 |
 | Commit history | — | [Commits on `develop`](https://github.com/seng321CoHobby/Co-Hobby/commits/develop) | All members | — | — | P1, P3 |
-| Sprint 2 release | `sprint-2` | *placeholder until #37* | `@sengProje64` | `@xa1res` | <https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2> | S3 |
+| Sprint 2 release | `sprint-2` | [#54](https://github.com/seng321CoHobby/Co-Hobby/pull/54) | `@sengProje64` | `@xa1res` | <https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2> | S3 |
 
 ## References
 - Sprint 2 assignment text, SENG 321 Microsoft Teams ("Sprint 2 – Requirements & Architecture").
