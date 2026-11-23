@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>08 Create Group</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .suggest { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+</style>
+</head>
+<body>
+<div class="window">
+  <header class="topbar">
+    <div class="logo"><span class="mark">Co</span>Co-Hobby</div>
+    <nav class="tabs"><a>Feed</a><a>Find groups</a><a class="on">Create group</a><a>My project</a></nav>
+    <div class="user"><span class="avatar">AD</span>Ahmet Demir</div>
+  </header>
+
+  <main class="page">
+    <div class="head"><div><h1>Create a group</h1><p class="lead">You become the group's owner. List the roles you still need so hobbyists can find you.</p></div></div>
+
+    <div class="two">
+      <section>
+        <div class="alert err" style="margin-bottom:16px"><b>Invalid Request</b>Add at least one needed role.<div class="code">400 · INVALID_INPUT</div></div>
+
+        <div class="field"><label>Group name <span class="req">*</span></label><div class="input">Ankara Indie Collective</div></div>
+        <div class="field"><label>Description <span class="opt">optional</span></label><div class="textarea">Indie rock band recording a first EP. Rehearsals twice a week in Çankaya.</div></div>
+        <div class="pair field">
+          <div><label class="lbl">Category <span class="req">*</span></label><div class="select">Music</div></div>
+          <div><label class="lbl">Your skill role <span class="req">*</span></label><div class="select">Guitarist</div><div class="hint">You fill this role as OWNER.</div></div>
+        </div>
+        <div class="field">
+          <label>Needed roles <span class="req">*</span> <span class="opt">at least one</span></label>
+          <div class="tagbox error"><span class="small">No roles added</span></div>
+          <div class="field-error">Add at least one role you are looking for.</div>
+          <div class="suggest"><span class="hint" style="margin:0 4px 0 0">Music roles:</span><span class="chip">+ Drummer</span><span class="chip">+ Vocalist</span><span class="chip">+ Bassist</span></div>
+        </div>
+        <div class="actions"><span class="hint" style="margin:0 auto 0 0"><span class="req">*</span> Required</span><span class="btn">Cancel</span><span class="btn primary">Create group</span></div>
+      </section>
+
+      <aside class="stack">
+        <section>
+          <div class="caption">Valid form, roles added</div>
+          <div class="panel"><div class="lbl">Needed roles</div><div class="tagbox"><span class="chip">Drummer <span class="x">✕</span></span><span class="chip">Vocalist <span class="x">✕</span></span></div></div>
+        </section>
+        <section>
+          <div class="caption">After submit, 201</div>
+          <div class="alert ok"><b>Group created</b>You are the OWNER (Guitarist). Next: assign members to the open roles.</div>
+          <div class="cast" style="margin-top:10px"><span class="status filled">Guitarist (owner)</span><span class="status open">Drummer</span><span class="status open">Vocalist</span></div>
+        </section>
+        <section>
+          <div class="caption">Not signed in, 401</div>
+          <div class="alert info"><b>Sign in required</b>Shown when the token is missing or expired.</div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<aside class="notes">
+  <h4>Prototype notes — Screen 08 · US-02 / UC-02</h4>
+  <ul>
+    <li>Submit: <code>POST /groups</code> (<code>createGroup</code>) with <code>NewGroupListing</code>: <code>groupName</code>*, <code>category</code>*, <code>creatorSkillRole</code>*, <code>neededRoles</code>* (min 1), <code>description</code>.</li>
+    <li>Category and role options come from <code>GET /tags</code>.</li>
+    <li><code>201</code> → <code>GroupListingResponse</code>; the creator is the single member with <code>memberRole</code> OWNER. Then go to Screen 04.</li>
+    <li><code>400</code> → empty <code>neededRoles</code> or missing field; <code>401</code> → sign-in notice.</li>
+  </ul>
+</aside>
+</body>
+</html>

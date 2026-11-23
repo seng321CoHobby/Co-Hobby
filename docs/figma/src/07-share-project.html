@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>07 Share Completed Project</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .steps { display: flex; gap: 6px; margin: 14px 0; }
+  .steps span { flex: 1; text-align: center; padding: 3px 0; border-radius: 2px; background: var(--blue-soft); color: var(--blue-dark); font-size: 11px; font-weight: 700; border: 1px solid var(--blue-line); }
+  .preview { border: 1px solid var(--line); border-radius: 2px; padding: 12px 14px; }
+  .states { margin: 20px 72px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+</style>
+</head>
+<body>
+<div class="window">
+  <header class="topbar">
+    <div class="logo"><span class="mark">Co</span>Co-Hobby</div>
+    <nav class="tabs"><a>Feed</a><a>Find groups</a><a>Create group</a><a class="on">My project</a></nav>
+    <div class="user"><span class="avatar">AD</span>Ahmet Demir · owner</div>
+  </header>
+
+  <main class="page" style="min-height:330px">
+    <div class="crumb">Ankara Indie Collective / Project</div>
+    <div class="head"><div><div class="row" style="gap:12px"><h1>First EP Recording</h1><span class="status done">COMPLETED</span></div><p class="lead">Four-track indie EP recorded over two weeks.</p></div><span class="btn primary">Share project</span></div>
+  </main>
+
+  <div class="scrim">
+    <div class="modal">
+      <div class="spread"><h2>Share to the public feed?</h2><span class="small">Close</span></div>
+      <p class="small" style="margin-top:6px">Anyone can see shared projects on the feed, without signing in.</p>
+      <div class="steps"><span>PLANNING</span><span>WEEK_1</span><span>WEEK_2</span><span>COMPLETED</span></div>
+      <div class="preview"><div class="spread"><h3>First EP Recording</h3><span class="status done">COMPLETED</span></div><div class="small" style="margin-top:4px">Four-track indie EP recorded over two weeks.</div></div>
+      <div class="row" style="justify-content:flex-end;margin-top:18px"><span class="btn">Cancel</span><span class="btn primary">Share project</span></div>
+    </div>
+  </div>
+</div>
+
+<section class="states">
+  <div><div class="caption">Success, 200</div><div class="alert ok"><b>Project shared</b>It now appears on the public feed (<span class="mono">isShared: true</span>).</div></div>
+  <div><div class="caption">Not completed, 409</div><div class="alert err"><b>Project is not COMPLETED</b>Finish all milestones before sharing. Current stage: WEEK_2.<div class="code">409 · problem+json</div></div></div>
+  <div><div class="caption">Not the owner, 403</div><div class="alert warn"><b>Only the Project Owner can share the project</b><div class="code">403</div></div></div>
+  <div><div class="caption">Not found, 404</div><div class="alert err"><b>Project not found</b><div class="code">404</div></div></div>
+</section>
+
+<aside class="notes">
+  <h4>Prototype notes — Screen 07 · US-07 / UC-05</h4>
+  <ul>
+    <li>Confirm: <code>POST /projects/{projectId}/share</code> (<code>shareProject</code>), no request body.</li>
+    <li><code>200</code> → <code>ProjectResponse</code> with <code>isShared</code> true; the project shows on Screen 01.</li>
+    <li><code>409</code> → project not COMPLETED; <code>403</code> non-owner; <code>404</code> unknown project; <code>401</code> sign-in notice.</li>
+    <li>The "Share project" button is enabled in every stage so the 409 rule stays visible; the dialog explains why sharing fails before COMPLETED.</li>
+  </ul>
+</aside>
+</body>
+</html>

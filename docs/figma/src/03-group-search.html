@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>03 Group Search</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .bar { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end; margin-bottom: 28px; }
+  .meta { text-align: right; }
+</style>
+</head>
+<body>
+<div class="window">
+  <header class="topbar">
+    <div class="logo"><span class="mark">Co</span>Co-Hobby</div>
+    <nav class="tabs"><a>Feed</a><a class="on">Find groups</a><a>Create group</a><a>My project</a></nav>
+    <div class="user"><span class="btn sm">Sign in</span></div>
+  </header>
+
+  <main class="page">
+    <div class="head"><div><h1>Find a group</h1><p class="lead">Pick a hobby category, then narrow it down to the role you play. No sign-in needed.</p></div></div>
+
+    <section class="bar panel">
+      <div><label class="lbl">Category <span class="req">*</span></label><div class="select">Music</div></div>
+      <div><label class="lbl">Role you play <span class="opt">optional</span></label><div class="select">Drummer</div></div>
+      <span class="btn primary">Search groups</span>
+    </section>
+
+    <div class="spread" style="margin-bottom:6px"><h2>2 open groups need a Drummer</h2><span class="small">Category: Music</span></div>
+    <div class="list">
+      <div class="li">
+        <div>
+          <div class="row"><h3>Ankara Indie Collective</h3><span class="tag">Music</span></div>
+          <p>Indie rock band recording a first EP. Rehearsals twice a week in Çankaya.</p>
+          <div class="cast"><span class="status open">Drummer</span><span class="status open">Vocalist</span><span class="status filled">Guitarist (owner)</span></div>
+        </div>
+        <div class="meta"><span class="btn sm">View group</span><div class="small" style="margin-top:8px">1 member · 2 open roles</div></div>
+      </div>
+      <div class="li">
+        <div>
+          <div class="row"><h3>Kadıköy Garage Band</h3><span class="tag">Music</span></div>
+          <p>Garage rock covers and originals. Sunday rehearsals in Kadıköy, Istanbul.</p>
+          <div class="cast"><span class="status open">Drummer</span><span class="status filled">Guitarist</span><span class="status filled">Bassist (owner)</span></div>
+        </div>
+        <div class="meta"><span class="btn sm">View group</span><div class="small" style="margin-top:8px">2 members · 1 open role</div></div>
+      </div>
+    </div>
+
+    <div class="two" style="grid-template-columns:1fr 1fr;margin-top:32px">
+      <section>
+        <div class="caption">No match, 200 with an empty list (example search: Short Film, Director)</div>
+        <div class="empty">
+          <h3>No open groups match</h3>
+          <div class="small" style="margin:4px 0 14px">No Short Film group is looking for a Director right now. Try another role, or create your own group.</div>
+          <div class="row" style="justify-content:center"><span class="btn sm">Clear role filter</span><span class="btn sm primary">Create a group</span></div>
+        </div>
+      </section>
+      <section>
+        <div class="caption">Category missing, 400</div>
+        <div class="panel white stack">
+          <div><label class="lbl">Category <span class="req">*</span></label><div class="select error placeholder">Select a category</div><div class="field-error">Choose a category to search.</div></div>
+          <div class="alert err"><b>Invalid Request</b>Required query parameter category is missing.<div class="code">400 · INVALID_INPUT</div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<aside class="notes">
+  <h4>Prototype notes — Screen 03 · US-03 / UC-03</h4>
+  <ul>
+    <li>Search: <code>GET /groups?category=Music&amp;seekingRole=Drummer</code> (<code>listAvailableGroups</code>), public.</li>
+    <li>Filter options come from <code>GET /tags</code> (Music, Short Film, …). <code>category</code> is required, <code>seekingRole</code> optional.</li>
+    <li>Row fields from <code>GroupListingResponse</code>: <code>groupName</code>, <code>description</code>, <code>category</code>, <code>neededRoles</code>, <code>members</code>.</li>
+    <li>Open role = an entry in <code>neededRoles</code> not yet taken by a member's <code>skillRole</code>. The owner's role is <code>creatorSkillRole</code>.</li>
+    <li><code>200 []</code> → empty state. <code>400</code> → inline field error plus <code>Problem</code> message.</li>
+    <li>"View group" → Screen 04, using the same listing item (no separate group-detail endpoint). Group names are sample data.</li>
+  </ul>
+</aside>
+</body>
+</html>
