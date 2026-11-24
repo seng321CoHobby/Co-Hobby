@@ -24,7 +24,7 @@
 
 ## 2. Required Deliverables (SRC-1)
 
-**How to use this table:** Status and QA columns reflect the QA-01 sweep on `develop` (2026-11-23). Items depending on the final release (`#37`) remain open until OPS-04 completes.
+**How to use this table:** Status and QA columns reflect the QA-01 sweep on `develop` (2026-11-23). Release items (`#37`) were updated after OPS-04 published the `sprint-2` tag on 2026-11-23; only the Teams upload (S7) is still open.
 
 Legend: ✅ merged into `develop` · 🟡 open pull request · 🔴 no pull request yet
 
@@ -81,7 +81,7 @@ Legend: ✅ merged into `develop` · 🟡 open pull request · 🔴 no pull requ
 |---|---|---|---|---|---|
 | S1 | Team information is given: team number, project name, and members with student numbers and GitHub accounts. | `seng_321_sprint_2_submission.md` | #36 / PR #53 | ✅ | [x] |
 | S2 | The report links the GitHub repository: <https://github.com/seng321CoHobby/Co-Hobby> | `seng_321_sprint_2_submission.md` | #36 / PR #53 | ✅ | [x] |
-| S3 | The report gives the release and tag information: the `sprint-2` tag on `main` and its GitHub Release. | `seng_321_sprint_2_submission.md`, Releases page | #37 / PR #54, PR #55 | 🟡 | [ ] |
+| S3 | The report gives the release and tag information: the `sprint-2` tag on `main` and its GitHub Release. | `seng_321_sprint_2_submission.md`, Releases page | #37 / PR #54, PR #55 | ✅ | [x] |
 | S4 | The report gives each member's name and Sprint 2 responsibilities. | `seng_321_sprint_2_submission.md`, `CONTRIBUTIONS.md` | #36 / PR #53 | ✅ | [x] |
 | S5 | The report links the relevant issues, pull requests, technical documents, diagrams and the Figma file. | Traceability table in the report | #36 / PR #53 | ✅ | [x] |
 | S6 | Every link in the report resolves from a logged-out browser. | QA-01 sweep (public repo and Figma view-only link verified in incognito mode; `sprint-2` tag URL resolves once #37 publishes) | #35 | ✅ | [x] |
@@ -98,8 +98,8 @@ Legend: ✅ merged into `develop` · 🟡 open pull request · 🔴 no pull requ
 | P5 | Every Sprint 2 issue (#24–#38) has the `sprint-2` label, an area label and the Sprint 2 milestone. | Issue list filtered by milestone | ✅ | [x] |
 | P6 | Every commit author email is linked to the member's GitHub account, so contributions show up under their username. | Commit list on GitHub (`@xekone1` historical note documented in `CONTRIBUTIONS.md`) | ✅ | [x] |
 | P7 | Demo and template files are removed (`index.html` and `package.json` removed from root). | Repository root (#25 / PR #52) | ✅ | [x] |
-| P8 | The release follows this order: all Sprint 2 PRs merged into `develop`, then a reviewed release PR from `develop` to `main`, then the `sprint-2` tag and GitHub Release, then the final links in the report. | #37 / PR #54, PR #55 | 🟡 | [ ] |
-| P9 | Issues are closed by the release PR only after their evidence is merged. | Issue list after the release (#37) | 🟡 | [ ] |
+| P8 | The release follows this order: all Sprint 2 PRs merged into `develop`, then a reviewed release PR from `develop` to `main`, then the `sprint-2` tag and GitHub Release, then the final links in the report. | #37 / PR #54, PR #55 | ✅ | [x] |
+| P9 | Issues are closed by the release PR only after their evidence is merged. | Issue list after the release (#37) | ✅ | [x] |
 
 ## 5. Consistency with Sprint 1 (SRC-2)
 
@@ -146,9 +146,9 @@ Updated QA-01 snapshot on 2026-11-23:
 | @Bruhun (Enes Alp Erkmen) | Sprint 2 skeletons and C4 L1 (PR #39 ✅), API 403 clarification (PR #41 ✅), C4 L2 and design decisions (PR #45 ✅), UML use-case and state (PR #46 ✅) | #40, #43, #44, #48, #49, #52 | ✅ |
 | @bakicanerdogan (Baki Can Erdoğan) | UML class and sequence (PR #40 ✅), Figma prototypes (PR #47 ✅), sequence-note fix (PR #48 ✅), user-flow diagrams (PR #50 ✅) | #39, #41, #45, #46 | ✅ |
 | @beyazitKRGL (Yıldırım Beyazıt Köroğlu) | SRS (PR #42 ✅); product input to Figma prototypes (#30) | #44, #47 | 🟡 one authored PR + product input on #30 and two PR reviews |
-| @yigitozkaya07 (Hüseyin Yiğit Özkaya) | NFR catalogue (PR #43 ✅), refined backlog (PR #44 ✅), QA-01 sweep & peer-review exercise (#35 🟡) | #42, #50, #51, #53 | ✅ |
-| @sengProje64 (Abdullah Şar) | NFR verification tooling (PR #51 ✅), repository cleanup (PR #52 ✅), Sprint 2 release (#37 / PR #54, PR #55 🟡) | — | ✅ |
-| @xa1res (Mete Dugan) | Assessment checklist (PR #49 ✅), submission report and contributions (PR #53 ✅) | #35, #37 (pending) | ✅ |
+| @yigitozkaya07 (Hüseyin Yiğit Özkaya) | NFR catalogue (PR #43 ✅), refined backlog (PR #44 ✅), QA-01 sweep & peer-review exercise (PR #57 ✅) | #42, #50, #51, #53 | ✅ |
+| @sengProje64 (Abdullah Şar) | NFR verification tooling (PR #51 ✅), repository cleanup (PR #52 ✅), Sprint 2 release (#37 / PR #54 ✅, PR #55 ✅) | — | ✅ |
+| @xa1res (Mete Dugan) | Assessment checklist (PR #49 ✅), submission report and contributions (PR #53 ✅) | #54, #55, #57 | ✅ |
 
 Final state is mirrored in `CONTRIBUTIONS.md` (#36 / #35).
 
@@ -163,6 +163,6 @@ Final state is mirrored in `CONTRIBUTIONS.md` (#36 / #35).
 | 5 | Open and merge PR #50 (user-flow diagrams) | @bakicanerdogan / @yigitozkaya07 | ✅ Merged |
 | 6 | Review and merge PR #48 (sequence-note fix) | @bakicanerdogan / @Bruhun | ✅ Merged |
 | 7 | Open and merge PR #52 (remove `index.html`, `package.json`; metadata) | @sengProje64 / @Bruhun | ✅ Merged |
-| 8 | QA-01 sweep against this checklist and peer-review exercise (#35) | @yigitozkaya07, reviewer @xa1res | 🟡 In review (`feature/QA-01-final-sweep`) |
+| 8 | QA-01 sweep against this checklist and peer-review exercise (#35) | @yigitozkaya07, reviewer @xa1res | ✅ Merged (PR #57) |
 | 9 | Submission report and `CONTRIBUTIONS.md` (PR #53) | @xa1res / @yigitozkaya07 | ✅ Merged |
-| 10 | Release PR (#54), `sprint-2` tag, GitHub Release, final links (#55), Teams upload | @sengProje64, reviewer @xa1res | 🟡 Pending QA-01 merge |
+| 10 | Release PR (#54), `sprint-2` tag, GitHub Release, final links (#55), Teams upload | @sengProje64, reviewer @xa1res | ✅ Released (PR #54, PR #55, `sprint-2` tag); 🟡 Teams upload pending |

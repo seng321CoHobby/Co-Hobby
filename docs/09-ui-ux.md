@@ -4,7 +4,7 @@
 **Team:** 19
 **Project:** Co-Hobby
 **Sprint:** 2
-**Status:** Ready for review — skeleton prepared by @Bruhun, authored by @bakicanerdogan (Issues #30, #31), product input @beyazitKRGL
+**Status:** Final (released in `sprint-2`) — skeleton prepared by @Bruhun, authored by @bakicanerdogan (Issues #30, #31), product input @beyazitKRGL
 
 > The UI/UX deliverable is the Figma project **including user-flow diagrams**.
 > This document links the Figma file and commits exported PNGs so the artifacts survive
