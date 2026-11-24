@@ -32,11 +32,25 @@ Full role and RACI details: [docs/03-roles-and-raci.md](docs/03-roles-and-raci.m
 | 7 | Product backlog and Definition of Ready | [docs/05-product-backlog.md](docs/05-product-backlog.md) | [#6](https://github.com/seng321CoHobby/Co-Hobby/issues/6) |
 | 8 | Combined Sprint 1 submission report | [docs/seng_321_sprint_1_submission.md](docs/seng_321_sprint_1_submission.md) | [#6](https://github.com/seng321CoHobby/Co-Hobby/issues/6) |
 
+## Sprint 2 deliverables
+
+| # | Deliverable | File | Issue |
+|---|---|---|---|
+| 1 | Software Requirements Specification | [docs/06-srs.md](docs/06-srs.md) | [#26](https://github.com/seng321CoHobby/Co-Hobby/issues/26) |
+| 2 | Refined product backlog and Definition of Done | [docs/05-product-backlog.md](docs/05-product-backlog.md) | [#27](https://github.com/seng321CoHobby/Co-Hobby/issues/27) |
+| 3 | Non-functional requirements, quality measures and verification plan | [docs/07-nfr-quality-measures.md](docs/07-nfr-quality-measures.md) | [#28](https://github.com/seng321CoHobby/Co-Hobby/issues/28), [#29](https://github.com/seng321CoHobby/Co-Hobby/issues/29) |
+| 4 | UI/UX: Figma prototypes and user flows | [docs/09-ui-ux.md](docs/09-ui-ux.md) | [#30](https://github.com/seng321CoHobby/Co-Hobby/issues/30), [#31](https://github.com/seng321CoHobby/Co-Hobby/issues/31) |
+| 5 | Architecture: C4 models and design decisions | [docs/08-architecture.md](docs/08-architecture.md) | [#32](https://github.com/seng321CoHobby/Co-Hobby/issues/32) |
+| 6 | UML diagrams (use case, state, class, sequence) | [docs/diagrams/](docs/diagrams/) | [#33](https://github.com/seng321CoHobby/Co-Hobby/issues/33), [#34](https://github.com/seng321CoHobby/Co-Hobby/issues/34) |
+| 7 | Sprint 2 assessment checklist | [docs/10-sprint-2-assessment-checklist.md](docs/10-sprint-2-assessment-checklist.md) | [#24](https://github.com/seng321CoHobby/Co-Hobby/issues/24) |
+| 8 | Combined Sprint 2 submission report | [docs/seng_321_sprint_2_submission.md](docs/seng_321_sprint_2_submission.md) | [#36](https://github.com/seng321CoHobby/Co-Hobby/issues/36) |
+
 ## Project tracking
 
 - [Issues](https://github.com/seng321CoHobby/Co-Hobby/issues)
 - [Pull Requests](https://github.com/seng321CoHobby/Co-Hobby/pulls)
 - [`sprint-1` release tag](https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-1)
+- [`sprint-2` release tag](https://github.com/seng321CoHobby/Co-Hobby/releases/tag/sprint-2)
 
 ## Repository workflow
 

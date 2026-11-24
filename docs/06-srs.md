@@ -4,7 +4,7 @@
 **Team:** 19
 **Project:** Co-Hobby
 **Sprint:** 2
-**Status:** Ready for review — authored by @beyazitKRGL (Issue #26)
+**Status:** Final (released in `sprint-2`) — authored by @beyazitKRGL (Issue #26)
 
 ## 1. Introduction
 
